@@ -1,0 +1,171 @@
+{
+  "nodes": [
+    {
+      "id": "mica-data-protection",
+      "category": "mica-reference",
+      "title": "MiCA - Data Protection Requirements",
+      "description": "MiCA Article 78 requires CASPs to comply with GDPR for processing personal data in crypto-asset services",
+      "source": {
+        "law_type": "mica",
+        "law_no": "MiCA",
+        "article": "78",
+        "title": "Markets in Crypto-Assets Regulation"
+      },
+      "edges": [],
+      "key_values": {
+        "gdpr_compliance": "required"
+      },
+      "priority": "recommended"
+    },
+    {
+      "id": "mica-complaints-handling",
+      "category": "mica-reference",
+      "title": "MiCA - Complaints Handling Procedures",
+      "description": "MiCA Article 71 requires CASPs to establish effective complaints handling procedures, free of charge, with reasonable timeframes",
+      "source": {
+        "law_type": "mica",
+        "law_no": "MiCA",
+        "article": "71",
+        "title": "Markets in Crypto-Assets Regulation"
+      },
+      "edges": [],
+      "key_values": {
+        "cost": "free of charge"
+      },
+      "priority": "recommended"
+    },
+    {
+      "id": "mica-outsourcing",
+      "category": "mica-reference",
+      "title": "MiCA - Outsourcing Requirements",
+      "description": "MiCA Article 73 sets rules for CASPs outsourcing operational functions, requiring competent authority notification and maintaining responsibility",
+      "source": {
+        "law_type": "mica",
+        "law_no": "MiCA",
+        "article": "73",
+        "title": "Markets in Crypto-Assets Regulation"
+      },
+      "edges": [],
+      "key_values": {
+        "notification": "competent authority"
+      },
+      "priority": "recommended"
+    },
+    {
+      "id": "mica-ict-security",
+      "category": "mica-reference",
+      "title": "MiCA - ICT Security Requirements",
+      "description": "MiCA Article 72 requires CASPs to have ICT security systems and protocols in compliance with DORA (Digital Operational Resilience Act)",
+      "source": {
+        "law_type": "mica",
+        "law_no": "MiCA",
+        "article": "72",
+        "title": "Markets in Crypto-Assets Regulation"
+      },
+      "edges": [],
+      "key_values": {
+        "framework": "DORA compliance"
+      },
+      "priority": "recommended"
+    },
+    {
+      "id": "mica-conflict-interest",
+      "category": "mica-reference",
+      "title": "MiCA - Conflict of Interest Prevention",
+      "description": "MiCA Article 72 requires CASPs to identify, prevent, manage and disclose conflicts of interest",
+      "source": {
+        "law_type": "mica",
+        "law_no": "MiCA",
+        "article": "72",
+        "title": "Markets in Crypto-Assets Regulation"
+      },
+      "edges": [],
+      "key_values": {},
+      "priority": "recommended"
+    },
+    {
+      "id": "mica-record-keeping",
+      "category": "mica-reference",
+      "title": "MiCA - Record Keeping",
+      "description": "MiCA Article 68 requires CASPs to maintain records of all services, activities and orders for 5 years",
+      "source": {
+        "law_type": "mica",
+        "law_no": "MiCA",
+        "article": "68",
+        "title": "Markets in Crypto-Assets Regulation"
+      },
+      "edges": [],
+      "key_values": {
+        "retention_period": "5 years",
+        "deadline_type": "retention"
+      },
+      "priority": "recommended"
+    },
+    {
+      "id": "mica-prudential-safeguards",
+      "category": "mica-reference",
+      "title": "MiCA - Prudential Safeguards",
+      "description": "MiCA Article 67 requires CASPs to have prudential safeguards equal to at least the higher of EUR 150,000 or one quarter of fixed overheads",
+      "source": {
+        "law_type": "mica",
+        "law_no": "MiCA",
+        "article": "67",
+        "title": "Markets in Crypto-Assets Regulation"
+      },
+      "edges": [],
+      "key_values": {
+        "minimum": "EUR 150,000 or 1/4 fixed overheads"
+      },
+      "priority": "recommended"
+    },
+    {
+      "id": "mica-insider-dealing",
+      "category": "mica-reference",
+      "title": "MiCA - Prohibition of Insider Dealing",
+      "description": "MiCA Title VI prohibits insider dealing, unlawful disclosure of inside information and market manipulation for crypto-assets",
+      "source": {
+        "law_type": "mica",
+        "law_no": "MiCA",
+        "article": "Title VI",
+        "title": "Markets in Crypto-Assets Regulation"
+      },
+      "edges": [],
+      "key_values": {},
+      "priority": "recommended"
+    },
+    {
+      "id": "mica-white-paper",
+      "category": "mica-reference",
+      "title": "MiCA - Crypto-Asset White Paper",
+      "description": "MiCA Article 6 requires publication of a white paper for crypto-assets offered to the public, with standardized content requirements",
+      "source": {
+        "law_type": "mica",
+        "law_no": "MiCA",
+        "article": "6",
+        "title": "Markets in Crypto-Assets Regulation"
+      },
+      "edges": [],
+      "key_values": {
+        "requirement": "standardized white paper for public offerings"
+      },
+      "priority": "recommended"
+    },
+    {
+      "id": "mica-sustainability",
+      "category": "mica-reference",
+      "title": "MiCA - Environmental Sustainability Disclosure",
+      "description": "MiCA requires CASPs to disclose information on principal adverse environmental and climate-related impacts of crypto-asset consensus mechanisms",
+      "source": {
+        "law_type": "mica",
+        "law_no": "MiCA",
+        "article": "66",
+        "title": "Markets in Crypto-Assets Regulation"
+      },
+      "edges": [],
+      "key_values": {
+        "scope": "consensus mechanism environmental impact"
+      },
+      "priority": "recommended"
+    }
+  ]
+}

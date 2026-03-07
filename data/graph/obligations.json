@@ -1,0 +1,1638 @@
+{
+  "nodes": [
+    {
+      "id": "def-crypto-asset",
+      "category": "definitions",
+      "title": "Kripto Varlik Tanimi",
+      "description": "Dagitik defter teknolojisi veya benzer teknoloji kullanilarak elektronik olarak olusturulan, saklanan ve transfer edilen, degeri veya hakki temsil eden gayri maddi varliklar",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "3/1-z",
+        "title": "Sermaye Piyasasi Kanunu",
+        "mcp_search": {
+          "tool": "search_within_kanun",
+          "params": {
+            "mevzuat_no": "6362",
+            "keyword": "kripto varlik",
+            "mevzuat_tertip": "5"
+          }
+        }
+      },
+      "edges": [],
+      "key_values": {
+        "added_by": "Kanun 7518",
+        "effective_date": "02.07.2024"
+      },
+      "priority": "recommended"
+    },
+    {
+      "id": "def-kvhs",
+      "category": "definitions",
+      "title": "Kripto Varlik Hizmet Saglayici (KVHS) Tanimi",
+      "description": "Platform isleten, saklama hizmeti sunan ve kripto varliklarla ilgili diger hizmetleri veren kuruluslar",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "35/B",
+        "title": "Sermaye Piyasasi Kanunu",
+        "mcp_search": {
+          "tool": "search_within_kanun",
+          "params": {
+            "mevzuat_no": "6362",
+            "keyword": "kripto varlik hizmet saglayici",
+            "mevzuat_tertip": "5"
+          }
+        }
+      },
+      "edges": [
+        {
+          "target": "def-crypto-asset",
+          "relation": "references"
+        },
+        {
+          "target": "licensing-spk-permit",
+          "relation": "triggers"
+        },
+        {
+          "target": "def-platform",
+          "relation": "defines"
+        },
+        {
+          "target": "def-wallet",
+          "relation": "defines"
+        }
+      ],
+      "key_values": {
+        "added_by": "Kanun 7518",
+        "effective_date": "02.07.2024",
+        "entity_type": "Anonim Sirket (nama yazili pay)"
+      },
+      "priority": "recommended"
+    },
+    {
+      "id": "def-platform",
+      "category": "definitions",
+      "title": "Platform Tanimi",
+      "description": "Kripto varlik alim satimi, ilk satis veya dagitimi, takas, transfer ve bunlara iliskin islemleri gerceklestiren kuruluslar",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "3/1-z",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "def-kvhs",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {},
+      "priority": "recommended"
+    },
+    {
+      "id": "def-wallet",
+      "category": "definitions",
+      "title": "Kripto Cuzdan Tanimi",
+      "description": "Kripto varliklarin transferini ve saklanmasini saglayan, ozel ve acik anahtarlari barindiran yazilim, donanim veya sistemler",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "3/1-z",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "def-kvhs",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {},
+      "priority": "recommended"
+    },
+    {
+      "id": "ttk-as-provisions",
+      "category": "definitions",
+      "title": "TTK Anonim Sirket Hukumleri",
+      "description": "Turk Ticaret Kanunu'nun anonim sirket kurulusu, yonetimi ve sermaye hukumleri",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6102",
+        "article": "329-564",
+        "title": "Turk Ticaret Kanunu",
+        "mcp_search": {
+          "tool": "search_within_kanun",
+          "params": {
+            "mevzuat_no": "6102",
+            "keyword": "anonim sirket",
+            "mevzuat_tertip": "5"
+          }
+        }
+      },
+      "edges": [],
+      "key_values": {},
+      "priority": "recommended"
+    },
+    {
+      "id": "licensing-spk-permit",
+      "category": "licensing",
+      "title": "SPK Kurulus ve Faaliyet Izni",
+      "description": "KVHS'lerin faaliyete baslamadan once SPK'dan kurulus izni ve faaliyet izni almasi zorunlulugu",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "35/B",
+        "title": "Sermaye Piyasasi Kanunu",
+        "mcp_search": {
+          "tool": "search_within_kanun",
+          "params": {
+            "mevzuat_no": "6362",
+            "keyword": "kurulus izni AND faaliyet izni",
+            "mevzuat_tertip": "5"
+          }
+        }
+      },
+      "edges": [
+        {
+          "target": "def-kvhs",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "licensing-as-requirement",
+          "relation": "requires"
+        },
+        {
+          "target": "licensing-capital-min",
+          "relation": "requires"
+        },
+        {
+          "target": "licensing-tubitak-tech",
+          "relation": "requires"
+        },
+        {
+          "target": "licensing-founder-requirements",
+          "relation": "requires"
+        },
+        {
+          "target": "licensing-permitted-services",
+          "relation": "defines"
+        },
+        {
+          "target": "licensing-teblig-establishment",
+          "relation": "implements"
+        },
+        {
+          "target": "governance-board-oversight",
+          "relation": "requires"
+        },
+        {
+          "target": "penalties-unlicensed-operation",
+          "relation": "penalizes"
+        }
+      ],
+      "key_values": {
+        "permit_types": "Kurulus izni + Faaliyet izni (ayri ayri)",
+        "regulator": "SPK (Sermaye Piyasasi Kurulu)"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "licensing-as-requirement",
+      "category": "licensing",
+      "title": "Anonim Sirket Zorunlulugu",
+      "description": "KVHS'ler anonim sirket olarak kurulmali, paylari nama yazili ve tamami nakit odenmis olmali",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "35/B",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "licensing-spk-permit",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "ttk-as-provisions",
+          "relation": "references"
+        }
+      ],
+      "key_values": {
+        "entity_type": "Anonim Sirket",
+        "share_type": "Nama yazili",
+        "payment": "Tamami nakit odenmis"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "licensing-founder-requirements",
+      "category": "licensing",
+      "title": "Kurucu ve Ortak Sartlari",
+      "description": "KVHS kuruculari ve nitelikli pay sahiplerinin SPK Kanunu'nda belirlenen sartlari karsilamasi zorunlulugu (sabika kaydi, mali yeterlilik, mesleki deneyim)",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "35/B",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "licensing-spk-permit",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "licensing-teblig-establishment",
+          "relation": "implements"
+        }
+      ],
+      "key_values": {
+        "requirements": "Sabika kaydi yok, mali yeterlilik, mesleki deneyim"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "licensing-permitted-services",
+      "category": "licensing",
+      "title": "KVHS Faaliyet Turleri",
+      "description": "KVHS'lerin sunabilecegi hizmetler: emir iletimi/islenmesi, saklama, ilk satis/dagitim aracilik, yatirim danismanligi, alim-satim, transfer",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "35/C",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "def-kvhs",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "licensing-teblig-establishment",
+          "relation": "implements"
+        },
+        {
+          "target": "mica-permitted-services",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {
+        "services": "Emir iletimi, saklama, ilk satis aracilik, yatirim danismanligi, alim-satim, transfer"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "licensing-transition-period",
+      "category": "licensing",
+      "title": "Mevcut Platformlar Icin Gecis Sureci",
+      "description": "Kanun oncesi faaliyet gosteren platformlarin SPK'ya basvuru ve uyum sureci",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "licensing-teblig-establishment",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "licensing-spk-permit",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "effective_date": "13.03.2025",
+        "deadline_type": "transition"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "licensing-teblig-establishment",
+      "category": "licensing",
+      "title": "KVHS Kurulus ve Faaliyet Esaslari Tebligi (III-35/B.1)",
+      "description": "KVHS'lerin kurulus, faaliyet izni, organizasyon yapisi ve isletme esaslarini duzenleyen SPK tebligi",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "licensing-spk-permit",
+          "relation": "implements"
+        },
+        {
+          "target": "def-kvhs",
+          "relation": "implements"
+        }
+      ],
+      "key_values": {
+        "effective_date": "13.03.2025",
+        "regulator": "SPK"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "licensing-capital-min",
+      "category": "capital",
+      "title": "Asgari Sermaye Yeterliligi",
+      "description": "KVHS'lerin SPK tarafindan belirlenen asgari sermaye ve ozkaynak yeterliligini saglamasi zorunlulugu",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "35/B",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "licensing-spk-permit",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "capital-teblig-adequacy",
+          "relation": "implements"
+        },
+        {
+          "target": "mica-capital-requirements",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {
+        "regulator": "SPK"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "capital-teblig-adequacy",
+      "category": "capital",
+      "title": "KVHS Sermaye Yeterliligi Tebligi (III-35/B.2)",
+      "description": "KVHS'lerin sermaye yeterliligi, ozkaynak hesaplamasi ve raporlama yukumlulukleri",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.2",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Calisma Usul ve Esaslari ile Sermaye Yeterliligi Hakkinda Teblig"
+      },
+      "edges": [
+        {
+          "target": "licensing-capital-min",
+          "relation": "implements"
+        },
+        {
+          "target": "capital-reporting",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "effective_date": "13.03.2025",
+        "regulator": "SPK"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "capital-reporting",
+      "category": "capital",
+      "title": "Sermaye Yeterliligi Raporlamasi",
+      "description": "KVHS'lerin ozkaynak ve sermaye yeterliligi durumunu SPK'ya duzenli olarak raporlamasi",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.2",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Calisma Usul ve Esaslari ile Sermaye Yeterliligi Hakkinda Teblig"
+      },
+      "edges": [
+        {
+          "target": "capital-teblig-adequacy",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {
+        "reporting_to": "SPK"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "licensing-tubitak-tech",
+      "category": "technical",
+      "title": "TUBITAK Teknik Kriterleri",
+      "description": "KVHS'lerin bilgi sistemleri ve teknolojik altyapilarinin TUBITAK tarafindan belirlenen kriterlere uygunlugu",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "35/B",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "licensing-spk-permit",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {
+        "certifier": "TUBITAK"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "governance-board-oversight",
+      "category": "governance",
+      "title": "Yonetim Kurulu Duzeyinde Uyum Denetimi",
+      "description": "KVHS yonetim kurulunun AML/CFT uyum programini ve risk yonetimini dogrudan denetlemesi zorunlulugu",
+      "source": {
+        "law_type": "kurum_yonetmelik",
+        "law_no": "MASAK-2024",
+        "title": "MASAK Yonetmeligi (Aralik 2024)"
+      },
+      "edges": [
+        {
+          "target": "aml-masak-program",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "governance-compliance-officer",
+          "relation": "requires"
+        },
+        {
+          "target": "governance-internal-audit",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "level": "Yonetim Kurulu"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "governance-compliance-officer",
+      "category": "governance",
+      "title": "Uyum Gorevlisi Atanmasi",
+      "description": "KVHS'lerin MASAK mevzuati kapsaminda uyum gorevlisi atamasi ve MASAK'a bildirmesi zorunlulugu",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "5549",
+        "article": "5",
+        "title": "Suc Gelirlerinin Aklanmasinin Onlenmesi Hakkinda Kanun",
+        "mcp_search": {
+          "tool": "search_within_kanun",
+          "params": {
+            "mevzuat_no": "5549",
+            "keyword": "uyum gorevlisi",
+            "mevzuat_tertip": "5"
+          }
+        }
+      },
+      "edges": [
+        {
+          "target": "governance-board-oversight",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "aml-masak-program",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "governance-training",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "reporting_to": "MASAK",
+        "appointment": "Yonetim Kurulu karari ile"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "governance-internal-audit",
+      "category": "governance",
+      "title": "Ic Denetim ve Kontrol Mekanizmasi",
+      "description": "KVHS'lerin AML/CFT uyum programinin etkinligini denetleyen bagimsiz ic denetim fonksiyonu",
+      "source": {
+        "law_type": "kurum_yonetmelik",
+        "law_no": "MASAK-2024",
+        "title": "MASAK Yonetmeligi (Aralik 2024)"
+      },
+      "edges": [
+        {
+          "target": "governance-board-oversight",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "aml-masak-program",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {
+        "scope": "AML/CFT uyum programi etkinlik denetimi"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "governance-training",
+      "category": "governance",
+      "title": "Personel Egitim Programi",
+      "description": "KVHS calisanlarinin AML/CFT yukumlulukleri, supheli islem tespiti ve raporlama konularinda duzenli egitim almasi",
+      "source": {
+        "law_type": "kurum_yonetmelik",
+        "law_no": "MASAK-2024",
+        "title": "MASAK Yonetmeligi (Aralik 2024)"
+      },
+      "edges": [
+        {
+          "target": "governance-compliance-officer",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "aml-masak-program",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {
+        "frequency": "Duzenli (yillik)",
+        "scope": "AML/CFT, supheli islem tespiti, raporlama"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "governance-sanctions-screening",
+      "category": "governance",
+      "title": "Yaptirim Listesi Taramasi",
+      "description": "KVHS'lerin musterilerini ve islemlerini BM, AB ve ulusal yaptirim listelerine karsi taramasi zorunlulugu",
+      "source": {
+        "law_type": "kurum_yonetmelik",
+        "law_no": "MASAK-2024",
+        "title": "MASAK Yonetmeligi (Aralik 2024)"
+      },
+      "edges": [
+        {
+          "target": "aml-masak-program",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "kyc-identity-threshold",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "lists": "BM, AB, OFAC, ulusal yaptirim listeleri"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "aml-masak-program",
+      "category": "aml",
+      "title": "MASAK Uyum Programi Zorunlulugu",
+      "description": "KVHS'lerin risk tabanli, kapsamli bir AML/CFT uyum programi olusturmasi ve yonetim kurulu duzeyinde denetim saglamasi",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "5549",
+        "article": "5",
+        "title": "Suc Gelirlerinin Aklanmasinin Onlenmesi Hakkinda Kanun",
+        "mcp_search": {
+          "tool": "search_within_kanun",
+          "params": {
+            "mevzuat_no": "5549",
+            "keyword": "uyum programi",
+            "mevzuat_tertip": "5"
+          }
+        }
+      },
+      "edges": [
+        {
+          "target": "aml-law-5549-base",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "kyc-identity-threshold",
+          "relation": "requires"
+        },
+        {
+          "target": "aml-str-reporting",
+          "relation": "requires"
+        },
+        {
+          "target": "aml-record-keeping",
+          "relation": "requires"
+        },
+        {
+          "target": "aml-risk-assessment",
+          "relation": "requires"
+        },
+        {
+          "target": "aml-masak-regulation",
+          "relation": "implements"
+        },
+        {
+          "target": "penalties-aml-violation",
+          "relation": "penalizes"
+        },
+        {
+          "target": "fatf-r15",
+          "relation": "references"
+        }
+      ],
+      "key_values": {
+        "regulator": "MASAK",
+        "oversight_level": "Yonetim Kurulu"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "aml-law-5549-base",
+      "category": "aml",
+      "title": "Kanun 5549 - Suc Gelirlerinin Aklanmasinin Onlenmesi",
+      "description": "Turkiye'nin temel AML/CFT kanunu. KVHS'ler Aralik 2024 degisikligi ile 'finansal kurulus' olarak siniflandirildi",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "5549",
+        "title": "Suc Gelirlerinin Aklanmasinin Onlenmesi Hakkinda Kanun",
+        "mcp_search": {
+          "tool": "search_within_kanun",
+          "params": {
+            "mevzuat_no": "5549",
+            "keyword": "yukumluluk",
+            "mevzuat_tertip": "5"
+          }
+        }
+      },
+      "edges": [
+        {
+          "target": "penalties-tck-aklama",
+          "relation": "penalizes"
+        }
+      ],
+      "key_values": {
+        "kvhs_status": "Finansal kurulus (Aralik 2024 itibariyle)",
+        "amendment_date": "25.12.2024"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "aml-masak-regulation",
+      "category": "aml",
+      "title": "MASAK Yonetmeligi - KVHS Yukumlulukleri (Aralik 2024)",
+      "description": "KVHS'lere yonelik sikilasitirilmis AML tedbirleri, kimlik tespiti esigi degisikligi ve travel rule yukumlulukleri",
+      "source": {
+        "law_type": "kurum_yonetmelik",
+        "law_no": "MASAK-2024",
+        "title": "MASAK Yonetmeligi (Aralik 2024)"
+      },
+      "edges": [
+        {
+          "target": "aml-law-5549-base",
+          "relation": "implements"
+        },
+        {
+          "target": "kyc-identity-threshold",
+          "relation": "implements"
+        },
+        {
+          "target": "travel-rule-obligations",
+          "relation": "implements"
+        }
+      ],
+      "key_values": {
+        "amendment_date": "25.12.2024",
+        "regulator": "MASAK"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "kyc-identity-threshold",
+      "category": "kyc",
+      "title": "Musteri Kimlik Tespiti Esigi",
+      "description": "15.000 TL ve uzeri kripto varlik islemlerinde ve elektronik transferlerde musteri kimlik tespiti zorunlulugu",
+      "source": {
+        "law_type": "kurum_yonetmelik",
+        "law_no": "MASAK-2024",
+        "title": "MASAK Yonetmeligi (Aralik 2024)"
+      },
+      "edges": [
+        {
+          "target": "aml-masak-regulation",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "aml-law-5549-base",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "kyc-enhanced-dd",
+          "relation": "triggers"
+        },
+        {
+          "target": "kyc-beneficial-owner",
+          "relation": "triggers"
+        },
+        {
+          "target": "mica-kyc-threshold",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {
+        "threshold": "15.000 TL",
+        "previous_threshold": "185.000 TL",
+        "effective_date": "25.12.2024"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "kyc-enhanced-dd",
+      "category": "kyc",
+      "title": "Sikilasitirilmis Tedbirler (Enhanced Due Diligence)",
+      "description": "Yuksek riskli musteriler, PEP'ler ve karmasik islemler icin sikilasitirilmis musteri tanima tedbirleri",
+      "source": {
+        "law_type": "kurum_yonetmelik",
+        "law_no": "MASAK-2024",
+        "title": "MASAK Yonetmeligi (Aralik 2024)"
+      },
+      "edges": [
+        {
+          "target": "kyc-identity-threshold",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "aml-masak-regulation",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {
+        "applies_to": "PEP'ler, yuksek riskli musteriler, karmasik islemler"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "kyc-beneficial-owner",
+      "category": "kyc",
+      "title": "Gercek Faydalanici Tespiti",
+      "description": "Tuzel kisi musterilerin gercek faydanicisinin (nihai kontrol eden gercek kisi) tespit edilmesi zorunlulugu",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "5549",
+        "article": "3",
+        "title": "Suc Gelirlerinin Aklanmasinin Onlenmesi Hakkinda Kanun"
+      },
+      "edges": [
+        {
+          "target": "kyc-identity-threshold",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "aml-law-5549-base",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {
+        "applies_to": "Tuzel kisi musteriler"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "travel-rule-obligations",
+      "category": "travel-rule",
+      "title": "Travel Rule - Transfer Bilgi Yukumlulukleri",
+      "description": "Kripto varlik transferlerinde gonderici ve alici bilgilerinin transfer mesajina eklenmesi zorunlulugu (FATF Travel Rule)",
+      "source": {
+        "law_type": "kurum_yonetmelik",
+        "law_no": "MASAK-2024",
+        "title": "MASAK Yonetmeligi (Aralik 2024)"
+      },
+      "edges": [
+        {
+          "target": "aml-masak-regulation",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "travel-rule-sender-data",
+          "relation": "requires"
+        },
+        {
+          "target": "travel-rule-receiver-data",
+          "relation": "requires"
+        },
+        {
+          "target": "travel-rule-unhosted-wallets",
+          "relation": "requires"
+        },
+        {
+          "target": "mica-travel-rule",
+          "relation": "tr_eu_equivalent"
+        },
+        {
+          "target": "fatf-r16",
+          "relation": "references"
+        }
+      ],
+      "key_values": {
+        "verification_threshold": "15.000 TL",
+        "applies_to": "Tum kripto varlik transferleri"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "travel-rule-sender-data",
+      "category": "travel-rule",
+      "title": "Gonderici Bilgileri Zorunlulugu",
+      "description": "Ad-soyad/unvan, hesap numarasi/islem referansi, adres/dogum tarihi-yeri veya kimlik numarasi",
+      "source": {
+        "law_type": "kurum_yonetmelik",
+        "law_no": "MASAK-2024",
+        "title": "MASAK Yonetmeligi (Aralik 2024)"
+      },
+      "edges": [
+        {
+          "target": "travel-rule-obligations",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {
+        "required_fields": "Ad-soyad, hesap no, adres/dogum tarihi/kimlik no"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "travel-rule-receiver-data",
+      "category": "travel-rule",
+      "title": "Alici Bilgileri Zorunlulugu",
+      "description": "Alicinin ad-soyad/unvan ve hesap numarasi/islem referansi bilgileri",
+      "source": {
+        "law_type": "kurum_yonetmelik",
+        "law_no": "MASAK-2024",
+        "title": "MASAK Yonetmeligi (Aralik 2024)"
+      },
+      "edges": [
+        {
+          "target": "travel-rule-obligations",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {
+        "required_fields": "Ad-soyad/unvan, hesap no/islem referansi"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "travel-rule-unhosted-wallets",
+      "category": "travel-rule",
+      "title": "Kayit Disi Cuzdan Transferleri",
+      "description": "Tescil edilmemis cuzdan adreslerine/adreslerinden yapilan transferlerde kimlik bilgisi talep etme yukumlulugu. Bilgi eksikligi halinde islemi reddetme/sinirlandirma/sonlandirma",
+      "source": {
+        "law_type": "kurum_yonetmelik",
+        "law_no": "MASAK-2024",
+        "title": "MASAK Yonetmeligi (Aralik 2024)"
+      },
+      "edges": [
+        {
+          "target": "travel-rule-obligations",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {
+        "action_on_incomplete": "Reddetme, sinirlandirma veya sonlandirma"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "aml-str-reporting",
+      "category": "reporting",
+      "title": "Supheli Islem Bildirimi (STR)",
+      "description": "Supheli islemlerin MASAK'a bildirilmesi zorunlulugu",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "5549",
+        "article": "4",
+        "title": "Suc Gelirlerinin Aklanmasinin Onlenmesi Hakkinda Kanun",
+        "mcp_search": {
+          "tool": "search_within_kanun",
+          "params": {
+            "mevzuat_no": "5549",
+            "keyword": "supheli islem bildirimi",
+            "mevzuat_tertip": "5"
+          }
+        }
+      },
+      "edges": [
+        {
+          "target": "aml-law-5549-base",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "penalties-str-failure",
+          "relation": "penalizes"
+        }
+      ],
+      "key_values": {
+        "deadline": "10 is gunu",
+        "reporting_to": "MASAK"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "aml-record-keeping",
+      "category": "aml",
+      "title": "Kayit Saklama Yukumlulugu",
+      "description": "Musteri kimlik bilgileri, islem kayitlari ve belgelerin 8 yil sureyle saklanmasi",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "5549",
+        "article": "8",
+        "title": "Suc Gelirlerinin Aklanmasinin Onlenmesi Hakkinda Kanun",
+        "mcp_search": {
+          "tool": "search_within_kanun",
+          "params": {
+            "mevzuat_no": "5549",
+            "keyword": "muhafaza",
+            "mevzuat_tertip": "5"
+          }
+        }
+      },
+      "edges": [
+        {
+          "target": "aml-law-5549-base",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {
+        "retention_period": "8 yil",
+        "scope": "Kimlik bilgileri, islem kayitlari, belgeler",
+        "deadline_type": "retention"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "aml-risk-assessment",
+      "category": "aml",
+      "title": "Risk Degerlendirmesi",
+      "description": "KVHS'lerin musteri, urun, islem ve cografi risk degerlendirmesi yapmasi ve risk tabanli yaklasim uygulamasi",
+      "source": {
+        "law_type": "kurum_yonetmelik",
+        "law_no": "MASAK-2024",
+        "title": "MASAK Yonetmeligi (Aralik 2024)"
+      },
+      "edges": [
+        {
+          "target": "aml-masak-regulation",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "aml-masak-program",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {
+        "risk_categories": "Musteri, urun/hizmet, islem, cografi"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "custody-client-assets",
+      "category": "custody",
+      "title": "Musteri Varliklarinin Saklanmasi ve Ayristirmasi",
+      "description": "KVHS'lerin musteri kripto varliklarini kendi varliklarindan ayri tutmasi ve koruma altina almasi",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "35/C",
+        "title": "Sermaye Piyasasi Kanunu",
+        "mcp_search": {
+          "tool": "search_within_kanun",
+          "params": {
+            "mevzuat_no": "6362",
+            "keyword": "musteri varliklari",
+            "mevzuat_tertip": "5"
+          }
+        }
+      },
+      "edges": [
+        {
+          "target": "def-kvhs",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "custody-cold-hot-wallet",
+          "relation": "requires"
+        },
+        {
+          "target": "penalties-custody-violation",
+          "relation": "penalizes"
+        },
+        {
+          "target": "mica-custody",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {
+        "requirement": "Musteri varliklari KVHS varliklarindan ayri tutulur"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "custody-cold-hot-wallet",
+      "category": "custody",
+      "title": "Soguk/Sicak Cuzdan Yonetimi",
+      "description": "Musteri kripto varliklarinin buyuk bolumunun soguk cuzdanlarda (offline) saklanmasi, sicak cuzdan limitlerinin belirlenmesi",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "custody-client-assets",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "licensing-teblig-establishment",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {
+        "best_practice": "Buyuk bolum soguk cuzdanda, sicak cuzdan limiti belirlenmeli"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "market-integrity-manipulation",
+      "category": "market-integrity",
+      "title": "Piyasa Manipulasyonu Yasagi",
+      "description": "Kripto varlik piyasalarinda manipulasyon, yaniltici islem ve bilgi bazli suistimal yasagi",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "35/C",
+        "title": "Sermaye Piyasasi Kanunu",
+        "mcp_search": {
+          "tool": "search_within_kanun",
+          "params": {
+            "mevzuat_no": "6362",
+            "keyword": "manipulasyon",
+            "mevzuat_tertip": "5"
+          }
+        }
+      },
+      "edges": [
+        {
+          "target": "def-kvhs",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "market-integrity-insider",
+          "relation": "requires"
+        },
+        {
+          "target": "penalties-market-manipulation",
+          "relation": "penalizes"
+        },
+        {
+          "target": "mica-market-abuse",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {},
+      "priority": "critical"
+    },
+    {
+      "id": "market-integrity-insider",
+      "category": "market-integrity",
+      "title": "Ici Bilgi Ticareti Yasagi",
+      "description": "Kripto varliklarla ilgili kamuya aciklanmamis bilgilerin ticari amacla kullanilmasi yasagi",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "35/C",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "market-integrity-manipulation",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "penalties-market-manipulation",
+          "relation": "penalizes"
+        }
+      ],
+      "key_values": {},
+      "priority": "critical"
+    },
+    {
+      "id": "tax-income-capital-gains",
+      "category": "tax",
+      "title": "Gelir Vergisi - Deger Artis Kazanci",
+      "description": "Gercek kisilerin kripto varlik alim-satim kazanclarinin deger artis kazanci olarak vergilendirilmesi",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "193",
+        "article": "Muk. 80",
+        "title": "Gelir Vergisi Kanunu",
+        "mcp_search": {
+          "tool": "search_within_kanun",
+          "params": {
+            "mevzuat_no": "193",
+            "keyword": "deger artis kazanci",
+            "mevzuat_tertip": "5"
+          }
+        }
+      },
+      "edges": [
+        {
+          "target": "tax-declaration-obligation",
+          "relation": "triggers"
+        }
+      ],
+      "key_values": {
+        "tax_type": "Deger artis kazanci",
+        "applies_to": "Gercek kisiler",
+        "note": "Kripto varlik vergisi mevzuati henuz netlestirilmemistir"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "tax-corporate",
+      "category": "tax",
+      "title": "Kurumlar Vergisi - KVHS Kazanci",
+      "description": "KVHS'lerin ticari kazanclarinin kurumlar vergisine tabi olmasi",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "5520",
+        "article": "1-6",
+        "title": "Kurumlar Vergisi Kanunu",
+        "mcp_search": {
+          "tool": "search_within_kanun",
+          "params": {
+            "mevzuat_no": "5520",
+            "keyword": "kurum kazanci",
+            "mevzuat_tertip": "5"
+          }
+        }
+      },
+      "edges": [
+        {
+          "target": "tax-declaration-obligation",
+          "relation": "triggers"
+        }
+      ],
+      "key_values": {
+        "rate": "Standart kurumlar vergisi orani",
+        "applies_to": "KVHS (anonim sirket)"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "tax-withholding",
+      "category": "tax",
+      "title": "Stopaj (Tevkifat) Yukumlulugu",
+      "description": "KVHS'lerin belirli odemelerde gelir vergisi stopaji yapma yukumlulugu",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "193",
+        "article": "94",
+        "title": "Gelir Vergisi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "tax-income-capital-gains",
+          "relation": "references"
+        }
+      ],
+      "key_values": {
+        "note": "Kripto varlik islemlerinde stopaj uygulamasi henuz netlestirilmemistir"
+      },
+      "priority": "recommended"
+    },
+    {
+      "id": "tax-vuk-bookkeeping",
+      "category": "tax",
+      "title": "VUK Defter Tutma ve Belge Duzeni",
+      "description": "KVHS'lerin Vergi Usul Kanunu kapsaminda defter tutma, belge duzenleme ve saklama yukumlulukleri",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "213",
+        "article": "171-257",
+        "title": "Vergi Usul Kanunu",
+        "mcp_search": {
+          "tool": "search_within_kanun",
+          "params": {
+            "mevzuat_no": "213",
+            "keyword": "defter tutma",
+            "mevzuat_tertip": "5"
+          }
+        }
+      },
+      "edges": [
+        {
+          "target": "tax-corporate",
+          "relation": "requires"
+        },
+        {
+          "target": "aml-record-keeping",
+          "relation": "references"
+        }
+      ],
+      "key_values": {
+        "scope": "Yevmiye defteri, defteri kebir, envanter defteri"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "tax-declaration-obligation",
+      "category": "tax",
+      "title": "Vergi Beyannamesi Verme Yukumlulugu",
+      "description": "KVHS'lerin ve kripto varlik yatirimcilarinin ilgili vergi beyannamelerini suresi icinde vermesi",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "213",
+        "title": "Vergi Usul Kanunu"
+      },
+      "edges": [
+        {
+          "target": "tax-vuk-bookkeeping",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {},
+      "priority": "required"
+    },
+    {
+      "id": "penalties-unlicensed-operation",
+      "category": "penalties",
+      "title": "Izinsiz Faaliyet Cezasi",
+      "description": "SPK izni olmadan KVHS faaliyeti yurutenlere uygulanacak cezai yaptirimlar",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "109/A",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "licensing-spk-permit",
+          "relation": "penalizes"
+        }
+      ],
+      "key_values": {
+        "penalty_type": "Hapis cezasi ve adli para cezasi"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "penalties-aml-violation",
+      "category": "penalties",
+      "title": "AML Yukumluluk Ihlali Cezasi",
+      "description": "MASAK yukumluluklerin yerine getirilmemesi halinde idari para cezasi",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "5549",
+        "article": "13",
+        "title": "Suc Gelirlerinin Aklanmasinin Onlenmesi Hakkinda Kanun"
+      },
+      "edges": [
+        {
+          "target": "aml-masak-program",
+          "relation": "penalizes"
+        }
+      ],
+      "key_values": {
+        "penalty_type": "Idari para cezasi"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "penalties-str-failure",
+      "category": "penalties",
+      "title": "STR Bildirim Ihlali Cezasi",
+      "description": "Supheli islem bildiriminde bulunmama veya gecikme halinde ceza",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "5549",
+        "article": "14",
+        "title": "Suc Gelirlerinin Aklanmasinin Onlenmesi Hakkinda Kanun"
+      },
+      "edges": [
+        {
+          "target": "aml-str-reporting",
+          "relation": "penalizes"
+        }
+      ],
+      "key_values": {},
+      "priority": "required"
+    },
+    {
+      "id": "penalties-tck-aklama",
+      "category": "penalties",
+      "title": "TCK - Suc Gelirlerinin Aklanmasi Sucu",
+      "description": "Suc gelirlerinin aklanmasi sucunun cezai yaptirimi",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "5237",
+        "article": "282",
+        "title": "Turk Ceza Kanunu",
+        "mcp_search": {
+          "tool": "search_within_kanun",
+          "params": {
+            "mevzuat_no": "5237",
+            "keyword": "suc gelirlerinin aklanmasi",
+            "mevzuat_tertip": "5"
+          }
+        }
+      },
+      "edges": [
+        {
+          "target": "aml-law-5549-base",
+          "relation": "penalizes"
+        }
+      ],
+      "key_values": {
+        "penalty": "3-7 yil hapis + adli para cezasi"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "penalties-tck-terorism-financing",
+      "category": "penalties",
+      "title": "TCK - Terorizminin Finansmani Sucu",
+      "description": "Terorizminin finansmani sucunun cezai yaptirimi",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "5237",
+        "article": "282",
+        "title": "Turk Ceza Kanunu"
+      },
+      "edges": [
+        {
+          "target": "aml-law-5549-base",
+          "relation": "penalizes"
+        }
+      ],
+      "key_values": {
+        "penalty": "5-10 yil hapis"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "penalties-custody-violation",
+      "category": "penalties",
+      "title": "Musteri Varligi Ihlali Cezasi",
+      "description": "Musteri varliklarinin korunmasi yukumlulugunun ihlali halinde cezai yaptirim",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "110/A",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "custody-client-assets",
+          "relation": "penalizes"
+        }
+      ],
+      "key_values": {},
+      "priority": "required"
+    },
+    {
+      "id": "penalties-market-manipulation",
+      "category": "penalties",
+      "title": "Piyasa Manipulasyonu Cezasi",
+      "description": "Kripto varlik piyasasinda manipulasyon yapanlara uygulanacak cezai yaptirimlar",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "107",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "market-integrity-manipulation",
+          "relation": "penalizes"
+        }
+      ],
+      "key_values": {},
+      "priority": "required"
+    },
+    {
+      "id": "fatf-r15",
+      "category": "fatf-reference",
+      "title": "FATF Tavsiye 15 - Yeni Teknolojiler",
+      "description": "Ulkelerin ve finansal kuruluslarin yeni teknolojilerin (sanal varliklar dahil) aklama/terorizminin finansmani risklerini degerlendirmesi ve azaltmasi",
+      "source": {
+        "law_type": "fatf",
+        "law_no": "FATF-R15",
+        "title": "FATF Recommendation 15: New Technologies"
+      },
+      "edges": [
+        {
+          "target": "aml-masak-program",
+          "relation": "references"
+        },
+        {
+          "target": "aml-risk-assessment",
+          "relation": "references"
+        }
+      ],
+      "key_values": {
+        "scope": "Virtual assets, VASPs",
+        "interpretive_note": "INR.15 - VASP licensing/registration, AML/CFT supervision"
+      },
+      "priority": "recommended"
+    },
+    {
+      "id": "fatf-r16",
+      "category": "fatf-reference",
+      "title": "FATF Tavsiye 16 - Elektronik Transferler (Travel Rule)",
+      "description": "Elektronik transferlerde gonderici ve alici bilgilerinin transfer mesajina eklenmesi zorunlulugu (Wire Transfer Rule)",
+      "source": {
+        "law_type": "fatf",
+        "law_no": "FATF-R16",
+        "title": "FATF Recommendation 16: Wire Transfers"
+      },
+      "edges": [
+        {
+          "target": "travel-rule-obligations",
+          "relation": "references"
+        }
+      ],
+      "key_values": {
+        "scope": "Wire transfers, crypto asset transfers",
+        "threshold": "USD/EUR 1,000 (full beneficiary info required)"
+      },
+      "priority": "recommended"
+    },
+    {
+      "id": "mica-kyc-threshold",
+      "category": "mica-reference",
+      "title": "MiCA/TFR - KYC Esigi",
+      "description": "EU Transfer of Funds Regulation: tum transferlerde bilgi zorunlulugu, 1.000 EUR uzerinde tam dogrulama",
+      "source": {
+        "law_type": "mica",
+        "law_no": "EU-2023/1113",
+        "article": "Art. 14",
+        "title": "Transfer of Funds Regulation (TFR)"
+      },
+      "edges": [
+        {
+          "target": "kyc-identity-threshold",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {
+        "threshold": "1.000 EUR (tam dogrulama)",
+        "all_transfers": "Temel bilgi zorunlu"
+      },
+      "priority": "recommended"
+    },
+    {
+      "id": "mica-travel-rule",
+      "category": "mica-reference",
+      "title": "MiCA/TFR - Travel Rule",
+      "description": "EU Transfer of Funds Regulation kapsaminda kripto varlik transferlerinde gonderici/alici bilgi paylasimi",
+      "source": {
+        "law_type": "mica",
+        "law_no": "EU-2023/1113",
+        "title": "Transfer of Funds Regulation (TFR)"
+      },
+      "edges": [
+        {
+          "target": "travel-rule-obligations",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {},
+      "priority": "recommended"
+    },
+    {
+      "id": "mica-custody",
+      "category": "mica-reference",
+      "title": "MiCA - Musteri Varligi Korumasi",
+      "description": "MiCA Madde 70: Musteri kripto varliklarinin ayristirilmasi, sigorta veya garanti mekanizmasi",
+      "source": {
+        "law_type": "mica",
+        "law_no": "EU-2023/1114",
+        "article": "Art. 70",
+        "title": "Markets in Crypto-Assets Regulation (MiCA)"
+      },
+      "edges": [
+        {
+          "target": "custody-client-assets",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {
+        "requirement": "Segregation + insurance/guarantee"
+      },
+      "priority": "recommended"
+    },
+    {
+      "id": "mica-market-abuse",
+      "category": "mica-reference",
+      "title": "MiCA - Piyasa Suistimali",
+      "description": "MiCA Baslik VI: Kripto varlik piyasalarinda ici bilgi ticareti ve piyasa manipulasyonu yasagi",
+      "source": {
+        "law_type": "mica",
+        "law_no": "EU-2023/1114",
+        "article": "Title VI",
+        "title": "Markets in Crypto-Assets Regulation (MiCA)"
+      },
+      "edges": [
+        {
+          "target": "market-integrity-manipulation",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {},
+      "priority": "recommended"
+    },
+    {
+      "id": "mica-licensing",
+      "category": "mica-reference",
+      "title": "MiCA - CASP Yetkilendirme",
+      "description": "MiCA Madde 59-63: CASP'lerin AB uye devlet NCA'sindan yetkilendirme almasi ve AB genelinde pasaport hakki",
+      "source": {
+        "law_type": "mica",
+        "law_no": "EU-2023/1114",
+        "article": "Art. 59-63",
+        "title": "Markets in Crypto-Assets Regulation (MiCA)"
+      },
+      "edges": [
+        {
+          "target": "licensing-spk-permit",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {
+        "process": "NCA basvurusu, 40 is gunu tamlama + 90 is gunu karar",
+        "passporting": "AB genelinde gecerli",
+        "deadline": "01.07.2026 (gecis suresi sonu)"
+      },
+      "priority": "recommended"
+    },
+    {
+      "id": "mica-capital-requirements",
+      "category": "mica-reference",
+      "title": "MiCA - Sermaye Gereksinimleri",
+      "description": "MiCA kapsaminda CASP'ler icin hizmet turune gore asgari ozkaynak gereksinimleri",
+      "source": {
+        "law_type": "mica",
+        "law_no": "EU-2023/1114",
+        "article": "Art. 67",
+        "title": "Markets in Crypto-Assets Regulation (MiCA)"
+      },
+      "edges": [
+        {
+          "target": "licensing-capital-min",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {
+        "tier_1": "50.000 EUR (danismanlik, emir iletimi)",
+        "tier_2": "125.000 EUR (saklama, takas, islem)",
+        "tier_3": "150.000 EUR (platform isletme)"
+      },
+      "priority": "recommended"
+    },
+    {
+      "id": "mica-permitted-services",
+      "category": "mica-reference",
+      "title": "MiCA - CASP Hizmet Turleri",
+      "description": "MiCA kapsaminda CASP'lerin sunabilecegi hizmetler: saklama, platform isletme, takas, emir isleme, danismanlik, portfoy yonetimi, transfer",
+      "source": {
+        "law_type": "mica",
+        "law_no": "EU-2023/1114",
+        "article": "Art. 3(1)(16)",
+        "title": "Markets in Crypto-Assets Regulation (MiCA)"
+      },
+      "edges": [
+        {
+          "target": "licensing-permitted-services",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {
+        "services": "Custody, trading platform, exchange, order execution, advice, portfolio mgmt, transfer"
+      },
+      "priority": "recommended"
+    },
+    {
+      "id": "mica-governance",
+      "category": "mica-reference",
+      "title": "MiCA - Yonetisim Gereksinimleri",
+      "description": "MiCA kapsaminda CASP'lerin yonetim kurulu uygunlugu, ic kontrol, uyum fonksiyonu ve risk yonetimi gereksinimleri",
+      "source": {
+        "law_type": "mica",
+        "law_no": "EU-2023/1114",
+        "article": "Art. 68",
+        "title": "Markets in Crypto-Assets Regulation (MiCA)"
+      },
+      "edges": [
+        {
+          "target": "governance-board-oversight",
+          "relation": "tr_eu_equivalent"
+        },
+        {
+          "target": "governance-compliance-officer",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {
+        "requirements": "Fit and proper directors, internal controls, compliance function, risk management"
+      },
+      "priority": "recommended"
+    }
+  ]
+}

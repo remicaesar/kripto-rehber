@@ -1,0 +1,316 @@
+{
+  "paths": {
+    "platform": {
+      "service_type": "platform",
+      "capital_required": "150.000.000 TL",
+      "steps": [
+        {
+          "seq": 1,
+          "phase": "kurulus",
+          "node_id": "licensing-as-requirement",
+          "title": "Anonim Sirket Kurulumu",
+          "blocker": true
+        },
+        {
+          "seq": 2,
+          "phase": "kurulus",
+          "node_id": "licensing-founder-requirements",
+          "title": "Kurucu/Ortak Uygunluk Sartlari",
+          "blocker": true
+        },
+        {
+          "seq": 3,
+          "phase": "sermaye",
+          "node_id": "capital-asgari-platform",
+          "title": "150M TL Asgari Sermaye Yatirma",
+          "blocker": true
+        },
+        {
+          "seq": 4,
+          "phase": "sermaye",
+          "node_id": "capital-tampon-sermaye",
+          "title": "%25 Ilave Sermaye Tamponu Ayirma",
+          "blocker": false
+        },
+        {
+          "seq": 5,
+          "phase": "yonetim",
+          "node_id": "governance-board-oversight",
+          "title": "Yonetim Kurulu Olusturma (bagimsiz uye dahil)",
+          "blocker": true
+        },
+        {
+          "seq": 6,
+          "phase": "yonetim",
+          "node_id": "governance-compliance-officer",
+          "title": "Uyum Gorevlisi Atama",
+          "blocker": true
+        },
+        {
+          "seq": 7,
+          "phase": "yonetim",
+          "node_id": "governance-risk-yonetimi",
+          "title": "Risk Yonetim Birimi Kurma",
+          "blocker": false
+        },
+        {
+          "seq": 8,
+          "phase": "teknik",
+          "node_id": "technical-bilgi-sistemleri",
+          "title": "Bilgi Sistemleri Altyapisi Kurma",
+          "blocker": true
+        },
+        {
+          "seq": 9,
+          "phase": "teknik",
+          "node_id": "technical-siber-guvenlik",
+          "title": "Siber Guvenlik ve Penetrasyon Testi",
+          "blocker": true
+        },
+        {
+          "seq": 10,
+          "phase": "teknik",
+          "node_id": "licensing-tubitak-tech",
+          "title": "TUBITAK Teknik Degerlendirme",
+          "blocker": true
+        },
+        {
+          "seq": 11,
+          "phase": "aml",
+          "node_id": "aml-masak-program",
+          "title": "AML/CFT Uyum Programi Hazirlama",
+          "blocker": true
+        },
+        {
+          "seq": 12,
+          "phase": "aml",
+          "node_id": "aml-uyum-birimi",
+          "title": "MASAK Uyum Birimi Kurma",
+          "blocker": true
+        },
+        {
+          "seq": 13,
+          "phase": "aml",
+          "node_id": "kyc-identity-threshold",
+          "title": "KYC Sistemleri Kurma",
+          "blocker": true
+        },
+        {
+          "seq": 14,
+          "phase": "basvuru",
+          "node_id": "licensing-basvuru-belgeleri",
+          "title": "SPK Basvuru Belgelerini Hazirlama",
+          "blocker": true
+        },
+        {
+          "seq": 15,
+          "phase": "basvuru",
+          "node_id": "licensing-spk-permit",
+          "title": "SPK Faaliyet Izni Alma",
+          "blocker": true
+        }
+      ]
+    },
+    "saklama": {
+      "service_type": "saklama",
+      "capital_required": "500.000.000 TL",
+      "steps": [
+        {
+          "seq": 1,
+          "phase": "kurulus",
+          "node_id": "licensing-as-requirement",
+          "title": "Anonim Sirket Kurulumu",
+          "blocker": true
+        },
+        {
+          "seq": 2,
+          "phase": "kurulus",
+          "node_id": "licensing-founder-requirements",
+          "title": "Kurucu/Ortak Uygunluk Sartlari",
+          "blocker": true
+        },
+        {
+          "seq": 3,
+          "phase": "sermaye",
+          "node_id": "capital-asgari-saklama",
+          "title": "500M TL Asgari Sermaye Yatirma",
+          "blocker": true
+        },
+        {
+          "seq": 4,
+          "phase": "sermaye",
+          "node_id": "capital-tampon-sermaye",
+          "title": "%25 Ilave Sermaye Tamponu Ayirma",
+          "blocker": false
+        },
+        {
+          "seq": 5,
+          "phase": "yonetim",
+          "node_id": "governance-board-oversight",
+          "title": "Yonetim Kurulu Olusturma (bagimsiz uye dahil)",
+          "blocker": true
+        },
+        {
+          "seq": 6,
+          "phase": "yonetim",
+          "node_id": "governance-compliance-officer",
+          "title": "Uyum Gorevlisi Atama",
+          "blocker": true
+        },
+        {
+          "seq": 7,
+          "phase": "teknik",
+          "node_id": "custody-cold-hot-wallet",
+          "title": "Soguk/Sicak Cuzdan Altyapisi Kurma",
+          "blocker": true
+        },
+        {
+          "seq": 8,
+          "phase": "teknik",
+          "node_id": "custody-soguk-cuzdan-orani",
+          "title": "%80 Soguk Cuzdan Oranini Saglama",
+          "blocker": true
+        },
+        {
+          "seq": 9,
+          "phase": "teknik",
+          "node_id": "technical-kripto-anahtar-yonetimi",
+          "title": "Ozel Anahtar Yonetim Sistemi",
+          "blocker": true
+        },
+        {
+          "seq": 10,
+          "phase": "teknik",
+          "node_id": "custody-yedekleme",
+          "title": "3+ Lokasyonda Anahtar Yedekleme",
+          "blocker": true
+        },
+        {
+          "seq": 11,
+          "phase": "teknik",
+          "node_id": "technical-siber-guvenlik",
+          "title": "Siber Guvenlik ve Penetrasyon Testi",
+          "blocker": true
+        },
+        {
+          "seq": 12,
+          "phase": "aml",
+          "node_id": "aml-masak-program",
+          "title": "AML/CFT Uyum Programi Hazirlama",
+          "blocker": true
+        },
+        {
+          "seq": 13,
+          "phase": "aml",
+          "node_id": "aml-uyum-birimi",
+          "title": "MASAK Uyum Birimi Kurma",
+          "blocker": true
+        },
+        {
+          "seq": 14,
+          "phase": "sigorta",
+          "node_id": "custody-sigorta",
+          "title": "Saklama Sigortasi veya Karsilik Ayirma",
+          "blocker": false
+        },
+        {
+          "seq": 15,
+          "phase": "basvuru",
+          "node_id": "licensing-basvuru-belgeleri",
+          "title": "SPK Basvuru Belgelerini Hazirlama",
+          "blocker": true
+        },
+        {
+          "seq": 16,
+          "phase": "basvuru",
+          "node_id": "licensing-spk-permit",
+          "title": "SPK Faaliyet Izni Alma",
+          "blocker": true
+        }
+      ]
+    },
+    "transfer": {
+      "service_type": "transfer",
+      "capital_required": "10.000.000 TL",
+      "steps": [
+        {
+          "seq": 1,
+          "phase": "kurulus",
+          "node_id": "licensing-as-requirement",
+          "title": "Anonim Sirket Kurulumu",
+          "blocker": true
+        },
+        {
+          "seq": 2,
+          "phase": "kurulus",
+          "node_id": "licensing-founder-requirements",
+          "title": "Kurucu/Ortak Uygunluk Sartlari",
+          "blocker": true
+        },
+        {
+          "seq": 3,
+          "phase": "sermaye",
+          "node_id": "capital-asgari-transfer",
+          "title": "10M TL Asgari Sermaye Yatirma",
+          "blocker": true
+        },
+        {
+          "seq": 4,
+          "phase": "yonetim",
+          "node_id": "governance-board-oversight",
+          "title": "Yonetim Kurulu Olusturma",
+          "blocker": true
+        },
+        {
+          "seq": 5,
+          "phase": "yonetim",
+          "node_id": "governance-compliance-officer",
+          "title": "Uyum Gorevlisi Atama",
+          "blocker": true
+        },
+        {
+          "seq": 6,
+          "phase": "teknik",
+          "node_id": "technical-bilgi-sistemleri",
+          "title": "Transfer Altyapisi Kurma",
+          "blocker": true
+        },
+        {
+          "seq": 7,
+          "phase": "aml",
+          "node_id": "aml-masak-program",
+          "title": "AML/CFT Uyum Programi",
+          "blocker": true
+        },
+        {
+          "seq": 8,
+          "phase": "aml",
+          "node_id": "travel-rule-obligations",
+          "title": "Travel Rule Uyumu",
+          "blocker": true
+        },
+        {
+          "seq": 9,
+          "phase": "aml",
+          "node_id": "aml-uyum-birimi",
+          "title": "MASAK Uyum Birimi Kurma",
+          "blocker": true
+        },
+        {
+          "seq": 10,
+          "phase": "basvuru",
+          "node_id": "licensing-basvuru-belgeleri",
+          "title": "SPK Basvuru Belgelerini Hazirlama",
+          "blocker": true
+        },
+        {
+          "seq": 11,
+          "phase": "basvuru",
+          "node_id": "licensing-spk-permit",
+          "title": "SPK Faaliyet Izni Alma",
+          "blocker": true
+        }
+      ]
+    }
+  }
+}

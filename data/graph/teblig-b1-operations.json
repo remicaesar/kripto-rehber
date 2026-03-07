@@ -1,0 +1,1564 @@
+{
+  "nodes": [
+    {
+      "id": "licensing-basvuru-belgeleri",
+      "category": "licensing",
+      "title": "KVHS Basvuru Belgeleri",
+      "description": "SPK'ya yapilacak faaliyet izni basvurusunda esas sozlesme taslaklari, is plani, organizasyon semasi, yonetim kurulu bilgileri, mali tablolar ve teknik altyapi raporu sunulmalidir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "5",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "licensing-spk-permit",
+          "relation": "requires"
+        },
+        {
+          "target": "licensing-as-requirement",
+          "relation": "requires"
+        },
+        {
+          "target": "licensing-founder-requirements",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "submission_to": "SPK"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "licensing-basvuru-degerlendirme",
+      "category": "licensing",
+      "title": "Basvuru Degerlendirme Sureci",
+      "description": "SPK, basvuruyu belgelerin eksiksiz tesliminden itibaren en gec alti ay icinde sonuclandirir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "6",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "licensing-basvuru-belgeleri",
+          "relation": "requires"
+        },
+        {
+          "target": "licensing-spk-permit",
+          "relation": "triggers"
+        }
+      ],
+      "key_values": {
+        "max_review_period": "6 ay",
+        "authority": "SPK",
+        "deadline_type": "transition"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "licensing-faaliyet-izni-sartlari",
+      "category": "licensing",
+      "title": "Faaliyet Izni Sartlari",
+      "description": "Faaliyet izni verilebilmesi icin asgari sermayenin odenip blokeye alinmasi, teknik altyapinin kurulmasi, personel yapisinin tamamlanmasi ve is sureclerinin olusturulmasi gerekir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "7",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "licensing-capital-min",
+          "relation": "requires"
+        },
+        {
+          "target": "licensing-tubitak-tech",
+          "relation": "requires"
+        },
+        {
+          "target": "licensing-basvuru-degerlendirme",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "preconditions": "sermaye bloke, teknik altyapi, personel, is surecleri"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "licensing-faaliyet-izni-iptali",
+      "category": "licensing",
+      "title": "Faaliyet Izninin Iptali",
+      "description": "SPK, kanun ve teblig hukumlerine aykirilik halinde faaliyet iznini iptal edebilir. Iptal halinde musteri varliklari 3 ay icinde iade edilir veya devredilir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "8",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "licensing-spk-permit",
+          "relation": "references"
+        },
+        {
+          "target": "custody-client-assets",
+          "relation": "triggers"
+        },
+        {
+          "target": "penalties-unlicensed-operation",
+          "relation": "triggers"
+        }
+      ],
+      "key_values": {
+        "asset_return_period": "3 ay"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "licensing-esas-sozlesme",
+      "category": "licensing",
+      "title": "Esas Sozlesme Gereklilikleri",
+      "description": "KVHS'nin esas sozlesmesinde unvanda kripto varlik hizmet saglayicisi ibaresi bulunmali, faaliyet konusu acikca belirtilmeli ve SPK uyum taahhut edilmelidir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "9",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "licensing-as-requirement",
+          "relation": "implements"
+        },
+        {
+          "target": "licensing-basvuru-belgeleri",
+          "relation": "requires"
+        },
+        {
+          "target": "ttk-as-provisions",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {
+        "required_title_phrase": "Kripto Varlik Hizmet Saglayicisi"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "licensing-hizmet-siniflandirmasi",
+      "category": "licensing",
+      "title": "Hizmet Siniflandirmasi",
+      "description": "KVHS'ler platform isletimi, kripto varlik saklama, kripto varlik transferi ve SPK'nin belirleyecegi diger hizmetler icin ayri ayri izin almalidir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "4",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "licensing-permitted-services",
+          "relation": "implements"
+        },
+        {
+          "target": "licensing-capital-min",
+          "relation": "triggers"
+        }
+      ],
+      "key_values": {
+        "service_types": "platform isletimi, saklama, transfer, diger"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "licensing-ortaklik-degisiklik",
+      "category": "licensing",
+      "title": "Ortaklik Yapisi Degisiklik Bildirimi",
+      "description": "KVHS'nin %10'dan fazla payina sahip ortaklarindaki degisiklikler SPK onayina tabidir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "10",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "licensing-spk-permit",
+          "relation": "requires"
+        },
+        {
+          "target": "licensing-founder-requirements",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "threshold": "%10 pay",
+        "approval": "SPK onayi gerekli"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "licensing-beyaz-liste",
+      "category": "licensing",
+      "title": "Kripto Varlik Listeleme Kriterleri",
+      "description": "KVHS, platformda islem gorecek kripto varliklari belirlemek icin yazili kriterler olusturmali ve SPK'ya bildirmelidir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "47",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "licensing-permitted-services",
+          "relation": "implements"
+        },
+        {
+          "target": "mica-white-paper",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {
+        "criteria": "teknik altyapi, likidite, risk profili",
+        "notification_to": "SPK"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "licensing-gecis-donemi-teknik",
+      "category": "licensing",
+      "title": "Mevcut Platformlarin Teknik Uyum Sureci",
+      "description": "Kanun oncesi faaliyet gosteren mevcut kripto varlik platformlari, teknik altyapi gereksinimlerini belirlenen gecis suresi icinde tamamlamak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "gecici madde 1",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "licensing-transition-period",
+          "relation": "implements"
+        },
+        {
+          "target": "licensing-tubitak-tech",
+          "relation": "requires"
+        },
+        {
+          "target": "technical-bilgi-sistemleri",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "applies_to": "mevcut platformlar"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "governance-yk-bagimsiz-uye",
+      "category": "governance",
+      "title": "Yonetim Kurulunda Bagimsiz Uye Zorunlulugu",
+      "description": "KVHS yonetim kurulunda en az bir bagimsiz uye bulunmasi zorunludur",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "12",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "governance-board-oversight",
+          "relation": "implements"
+        },
+        {
+          "target": "licensing-spk-permit",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "min_independent_members": "1"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "governance-yk-yeterlilik",
+      "category": "governance",
+      "title": "Yonetim Kurulu Uye Yeterlilikleri",
+      "description": "YK uyelerinin en az lisans duzeyinde egitim, mali sektorde en az 5 yil deneyim ve temiz adli sicil gereklidir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "13",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "governance-yk-bagimsiz-uye",
+          "relation": "requires"
+        },
+        {
+          "target": "licensing-founder-requirements",
+          "relation": "implements"
+        }
+      ],
+      "key_values": {
+        "min_education": "lisans",
+        "min_experience": "5 yil finans sektoru"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "governance-genel-mudur",
+      "category": "governance",
+      "title": "Genel Mudur Atanma Sartlari",
+      "description": "Genel mudurun lisans duzeyinde egitim, en az 7 yil mali sektor deneyimi, temiz adli sicil ve SPK onayi kosullarini karsilamasi zorunludur",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "14",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "governance-board-oversight",
+          "relation": "requires"
+        },
+        {
+          "target": "licensing-spk-permit",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "min_experience": "7 yil finans sektoru",
+        "min_education": "lisans",
+        "approval_by": "SPK"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "governance-personel-yetkinlik",
+      "category": "governance",
+      "title": "Personel Yetkinlik ve Lisanslama",
+      "description": "KVHS'de musteri islemleri, risk yonetimi ve uyum alanlarinda calisan personelin SPK yetkinlik sartlarini karsilamasi ve ilgili lisanslara sahip olmasi zorunludur",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "15",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "governance-training",
+          "relation": "implements"
+        },
+        {
+          "target": "governance-compliance-officer",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "scope": "musteri islemleri, risk yonetimi, uyum",
+        "requirement": "SPK lisansi"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "governance-ic-kontrol",
+      "category": "governance",
+      "title": "Ic Kontrol Sistemi",
+      "description": "KVHS, faaliyetlerinin mevzuata ve ic duzenlemelere uygunlugunu surekli izleyecek bir ic kontrol sistemi kurmak zorundadir. Ic kontrol birimi dogrudan YK'ya raporlar",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "18",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "governance-internal-audit",
+          "relation": "requires"
+        },
+        {
+          "target": "governance-compliance-officer",
+          "relation": "requires"
+        },
+        {
+          "target": "governance-board-oversight",
+          "relation": "implements"
+        }
+      ],
+      "key_values": {
+        "reporting_line": "Yonetim Kurulu"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "governance-risk-yonetimi",
+      "category": "governance",
+      "title": "Risk Yonetim Sistemi",
+      "description": "KVHS, operasyonel risk, piyasa riski, kredi riski, likidite riski ve BT risklerini kapsayan bagimsiz bir risk yonetim sistemi kurmak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "19",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "governance-ic-kontrol",
+          "relation": "requires"
+        },
+        {
+          "target": "capital-teblig-adequacy",
+          "relation": "triggers"
+        },
+        {
+          "target": "governance-board-oversight",
+          "relation": "implements"
+        }
+      ],
+      "key_values": {
+        "risk_types": "operasyonel, piyasa, kredi, likidite, BT",
+        "independence": "bagimsiz birim"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "governance-cikar-catismasi",
+      "category": "governance",
+      "title": "Cikar Catismasi Yonetimi",
+      "description": "KVHS, cikar catismalarini tespit etmek, onlemek ve yonetmek icin yazili politika ve prosedurler olusturmak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "20",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "governance-board-oversight",
+          "relation": "implements"
+        },
+        {
+          "target": "mica-conflict-interest",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {
+        "requirement": "yazili politika ve prosedur"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "governance-calisanlara-islem-yasagi",
+      "category": "governance",
+      "title": "Calisanlara Yonelik Islem Kisitlamalari",
+      "description": "KVHS calisanlari ve yoneticileri, gorevleri nedeniyle elde ettikleri bilgileri kullanarak kendi veya yakinlari hesabina islem yapamazlar",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "49",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "market-integrity-insider",
+          "relation": "implements"
+        },
+        {
+          "target": "governance-cikar-catismasi",
+          "relation": "implements"
+        }
+      ],
+      "key_values": {
+        "scope": "calisanlar ve yoneticiler",
+        "prohibition": "iceriden bilgiyle islem"
+      },
+      "priority": "recommended"
+    },
+    {
+      "id": "technical-bilgi-sistemleri",
+      "category": "technical",
+      "title": "Bilgi Sistemleri Gereksinimleri",
+      "description": "KVHS, bilgi sistemlerini guvenlik, erisim kontrolu, veri butunlugu, sistem surekliligi ve iz kaydi gereksinimlerini karsilayacak sekilde kurmak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "25",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "licensing-tubitak-tech",
+          "relation": "implements"
+        },
+        {
+          "target": "technical-siber-guvenlik",
+          "relation": "requires"
+        },
+        {
+          "target": "technical-felaket-kurtarma",
+          "relation": "requires"
+        },
+        {
+          "target": "mica-ict-security",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {
+        "requirements": "guvenlik, erisim kontrolu, veri butunlugu, sureklilik, log"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "technical-siber-guvenlik",
+      "category": "technical",
+      "title": "Siber Guvenlik Gereksinimleri",
+      "description": "KVHS, penetrasyon testleri, guvenlik acigi taramalari, SIEM sistemi, olay mudahale plani ve yillik bagimsiz siber guvenlik denetimi yaptirmak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "26",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "technical-bilgi-sistemleri",
+          "relation": "implements"
+        },
+        {
+          "target": "licensing-tubitak-tech",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "pentest_frequency": "yillik",
+        "audit": "bagimsiz yillik denetim"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "technical-felaket-kurtarma",
+      "category": "technical",
+      "title": "Is Surekliligi ve Felaket Kurtarma",
+      "description": "KVHS, BCP ve DRP hazirlamak, yilda en az bir kez test etmek zorundadir. Yedek sistemler farkli cografi bolgelerde konumlandirilmalidir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "27",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "technical-bilgi-sistemleri",
+          "relation": "implements"
+        },
+        {
+          "target": "governance-risk-yonetimi",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "test_frequency": "yilda en az 1",
+        "backup_location": "farkli cografi bolge"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "technical-veri-merkezi",
+      "category": "technical",
+      "title": "Veri Merkezi Gereksinimleri",
+      "description": "KVHS'nin ana veri merkezi ve yedek veri merkezi Turkiye sinirlarinda bulunmak zorundadir. Musteri verileri yurt disina aktarilamaz",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "28",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "technical-bilgi-sistemleri",
+          "relation": "implements"
+        },
+        {
+          "target": "technical-felaket-kurtarma",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "location": "Turkiye",
+        "data_transfer_abroad": "yasak"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "technical-api-guvenlik",
+      "category": "technical",
+      "title": "API ve Sistem Entegrasyon Guvenligi",
+      "description": "Ucuncu taraflarla API entegrasyonu yapan KVHS'ler, API erisim kontrolu, hiz sinirlamasi, sifreleme ve izleme mekanizmalari kurmak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "29",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "technical-bilgi-sistemleri",
+          "relation": "implements"
+        },
+        {
+          "target": "technical-siber-guvenlik",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "requirements": "erisim kontrolu, rate limiting, sifreleme, monitoring"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "technical-kripto-anahtar-yonetimi",
+      "category": "technical",
+      "title": "Kriptografik Anahtar Yonetimi",
+      "description": "KVHS, ozel anahtarlarin uretimi, saklanmasi, yedeklenmesi ve imhasi icin HSM veya dengi guvenlik cozumleri kullanmak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "30",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "custody-cold-hot-wallet",
+          "relation": "implements"
+        },
+        {
+          "target": "custody-client-assets",
+          "relation": "requires"
+        },
+        {
+          "target": "technical-bilgi-sistemleri",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "requirement": "HSM veya dengi cozum",
+        "covers": "uretim, saklama, yedekleme, imha"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "technical-bilgi-guvenligi-politikasi",
+      "category": "technical",
+      "title": "Bilgi Guvenligi Politikasi",
+      "description": "KVHS, ISO 27001 veya dengi bir bilgi guvenligi yonetim sistemi standardina uygun yazili politika olusturmak ve YK onayi ile yururluge koymak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "44",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "technical-siber-guvenlik",
+          "relation": "implements"
+        },
+        {
+          "target": "technical-bilgi-sistemleri",
+          "relation": "requires"
+        },
+        {
+          "target": "governance-board-oversight",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "standard": "ISO 27001 veya dengi",
+        "approval": "Yonetim Kurulu"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "technical-olay-mudahale",
+      "category": "technical",
+      "title": "Siber Olay Mudahale Plani",
+      "description": "KVHS, siber guvenlik olaylarina mudahale icin yazili bir plan olusturmak zorundadir: tespit, siniflandirma, mudahale, iyilestirme ve raporlama",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "46",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "technical-siber-guvenlik",
+          "relation": "implements"
+        },
+        {
+          "target": "technical-felaket-kurtarma",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "stages": "tespit, siniflandirma, mudahale, iyilestirme, raporlama"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "technical-yonetim-bilgi-sistemi",
+      "category": "technical",
+      "title": "Yonetim Bilgi Sistemi (MIS)",
+      "description": "KVHS, yonetim karar alma sureclerini destekleyecek kapsamli bir MIS kurmak zorundadir: risk metrikleri, performans gostergeleri ve uyum durumu",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "43",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "technical-bilgi-sistemleri",
+          "relation": "implements"
+        },
+        {
+          "target": "governance-risk-yonetimi",
+          "relation": "requires"
+        },
+        {
+          "target": "governance-board-oversight",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "content": "risk metrikleri, performans, uyum durumu"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "technical-musteri-veri-koruma",
+      "category": "technical",
+      "title": "Musteri Kisisel Verilerin Korunmasi",
+      "description": "KVHS, musteri kisisel verilerini KVKK (6698) kapsaminda korumak, veri isleme envanteri olusturmak ve veri ihlali halinde KVKK Kurumu ile SPK'ya bildirim yapmak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "38",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "technical-bilgi-sistemleri",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "legal_basis": "KVKK 6698",
+        "breach_notification": "KVKK Kurumu ve SPK"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "technical-hizmet-surekliligi-testi",
+      "category": "technical",
+      "title": "Hizmet Surekliligi Testi",
+      "description": "KVHS, BCP ve DRP planlarini yilda en az bir kez kapsamli senaryo tabanli teste tabi tutmak ve sonuclari SPK'ya raporlamak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "47",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "technical-felaket-kurtarma",
+          "relation": "implements"
+        }
+      ],
+      "key_values": {
+        "test_frequency": "yilda en az 1",
+        "report_to": "SPK",
+        "deadline_type": "reporting"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "custody-varlik-ayristirma",
+      "category": "custody",
+      "title": "Musteri Varliklarinin Ayristirilmasi",
+      "description": "KVHS, musteri kripto ve nakit varliklarini kendi oz varliklarindan kesin olarak ayristirmak zorundadir. Musteri varliklari haciz/iflas masasindan muaftir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "31",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "custody-client-assets",
+          "relation": "implements"
+        },
+        {
+          "target": "law-6362-art35c-saklama",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {
+        "segregation": "kesin ayristirma",
+        "bankruptcy_protection": "evet"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "custody-soguk-cuzdan-orani",
+      "category": "custody",
+      "title": "Soguk Cuzdan Saklama Orani",
+      "description": "KVHS, musteri kripto varliklarinin en az %80'ini soguk cuzdanda saklamak zorundadir. Sicak cuzdanda tutulan miktar gunluk islem hacmine oranli olmalidir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "32",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "custody-cold-hot-wallet",
+          "relation": "implements"
+        },
+        {
+          "target": "custody-varlik-ayristirma",
+          "relation": "requires"
+        },
+        {
+          "target": "technical-kripto-anahtar-yonetimi",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "cold_wallet_min_ratio": "%80",
+        "hot_wallet": "gunluk islem hacmine oranli"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "custody-nakit-saklama",
+      "category": "custody",
+      "title": "Nakit Varlik Saklama Zorunlulugu",
+      "description": "Musteri nakit varliklari Turkiye'de kurulu bankalarda KVHS adina acilan emanet hesaplarda tutulmalidir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "33",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "custody-varlik-ayristirma",
+          "relation": "implements"
+        },
+        {
+          "target": "custody-client-assets",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "account_type": "emanet hesap",
+        "bank_location": "Turkiye"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "kyc-musteri-kabul-politikasi",
+      "category": "kyc",
+      "title": "Musteri Kabul Politikasi",
+      "description": "KVHS, musteri kabul surecinde risk bazli yaklasim benimsemeli, musteri risk profilini belirlemeli. Anonim hesap acilamaz",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "35",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "kyc-identity-threshold",
+          "relation": "implements"
+        },
+        {
+          "target": "kyc-enhanced-dd",
+          "relation": "triggers"
+        },
+        {
+          "target": "aml-risk-assessment",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "approach": "risk bazli",
+        "anonymous_accounts": "yasak"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "kyc-uzaktan-kimlik-tespiti",
+      "category": "kyc",
+      "title": "Uzaktan Musteri Kimlik Tespiti",
+      "description": "KVHS, uzaktan kimlik tespiti icin goruntulu gorusme, NFC kimlik dogrulama veya SPK/MASAK'in uygun gordugu dijital yontemler kullanabilir. Biometrik dogrulama zorunludur",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "36",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "kyc-musteri-kabul-politikasi",
+          "relation": "implements"
+        },
+        {
+          "target": "kyc-identity-threshold",
+          "relation": "implements"
+        }
+      ],
+      "key_values": {
+        "methods": "goruntulu gorusme, NFC, dijital",
+        "biometric": "zorunlu"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "kyc-musteri-sozlesme",
+      "category": "kyc",
+      "title": "Musteri Cerceve Sozlesmesi",
+      "description": "KVHS, her musteri ile ucretler, riskler, feragat haklari, sikayet yollari ve fesih kosullarini iceren yazili cerceve sozlesme imzalamak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "37",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "kyc-musteri-kabul-politikasi",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "content": "ucretler, riskler, feragat, sikayet, fesih",
+        "format": "yazili"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "kyc-musteri-risk-profili",
+      "category": "kyc",
+      "title": "Musteri Risk Profili Belirleme",
+      "description": "KVHS, her musteri icin yatirim deneyimi, mali durum, risk toleransi ve yatirim amaclarini degerlendirerek risk profili belirlemek zorundadir. Profil yilda en az bir kez guncellenir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "25",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "kyc-musteri-kabul-politikasi",
+          "relation": "implements"
+        },
+        {
+          "target": "aml-risk-assessment",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "factors": "deneyim, mali durum, risk toleransi, yatirim amaci",
+        "update_frequency": "yillik"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "reporting-musteri-bilgilendirme",
+      "category": "reporting",
+      "title": "Musteri Bilgilendirme Yukumlulugu",
+      "description": "KVHS, islem oncesinde musterilere kripto varlik riskleri, ucret/komisyonlar, emir iletim politikasi, cikar catismasi ve sikayet proseduru hakkinda bilgi vermek zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "38",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "governance-cikar-catismasi",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "timing": "islem oncesi",
+        "content": "riskler, ucretler, emir politikasi, cikar catismasi, sikayet"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "reporting-sikayet-yonetimi",
+      "category": "reporting",
+      "title": "Sikayet Yonetim Sureci",
+      "description": "KVHS, musteri sikayetlerini 30 gun icinde sonuclandirmali ve SPK'ya donemsel rapor etmelidir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "39",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "reporting-musteri-bilgilendirme",
+          "relation": "requires"
+        },
+        {
+          "target": "governance-ic-kontrol",
+          "relation": "requires"
+        },
+        {
+          "target": "mica-complaints-handling",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {
+        "max_resolution_period": "30 gun",
+        "reporting_to": "SPK"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "reporting-reklam-kurallari",
+      "category": "reporting",
+      "title": "Reklam ve Pazarlama Kurallari",
+      "description": "KVHS reklamlari yaniltici olamaz, garantili kazanc vaadi yapilamaz, risk uyarilari icermelidir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "40",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "reporting-musteri-bilgilendirme",
+          "relation": "requires"
+        },
+        {
+          "target": "market-integrity-manipulation",
+          "relation": "triggers"
+        }
+      ],
+      "key_values": {
+        "prohibited": "garantili kazanc vaadi",
+        "required": "risk uyarisi"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "reporting-kayit-saklama",
+      "category": "reporting",
+      "title": "Kayit Saklama Yukumlulugu",
+      "description": "KVHS, tum musteri islemleri, emir kayitlari, kimlik tespiti belgeleri, iletisim kayitlari ve sistem loglarini en az 10 yil sureyle saklamak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "41",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "aml-record-keeping",
+          "relation": "implements"
+        },
+        {
+          "target": "technical-bilgi-sistemleri",
+          "relation": "requires"
+        },
+        {
+          "target": "mica-record-keeping",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {
+        "retention_period": "10 yil",
+        "scope": "islemler, emirler, kimlik, iletisim, loglar",
+        "deadline_type": "retention"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "reporting-dis-kaynak",
+      "category": "reporting",
+      "title": "Dis Kaynak Kullanimi (Outsourcing)",
+      "description": "KVHS, kritik faaliyetlerin dis kaynaga devri icin SPK'dan onay almak zorundadir. Sorumluluk KVHS'de kalir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "42",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "licensing-spk-permit",
+          "relation": "requires"
+        },
+        {
+          "target": "governance-risk-yonetimi",
+          "relation": "triggers"
+        },
+        {
+          "target": "mica-outsourcing",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {
+        "approval": "SPK onay gerekli",
+        "responsibility": "KVHS sorumlulugu devam eder"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "reporting-spk-periyodik",
+      "category": "reporting",
+      "title": "SPK'ya Periyodik Raporlama",
+      "description": "KVHS, SPK'ya aylik faaliyet raporu, ucaylik finansal tablo, yillik bagimsiz denetim raporu ve olaganustu durumlarda aninda bildirim yapmak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "43",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "capital-reporting",
+          "relation": "implements"
+        },
+        {
+          "target": "governance-ic-kontrol",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "monthly": "faaliyet raporu",
+        "quarterly": "finansal tablo",
+        "annual": "bagimsiz denetim raporu",
+        "deadline_type": "reporting"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "reporting-ucret-seffafligi",
+      "category": "reporting",
+      "title": "Ucret ve Komisyon Seffafligi",
+      "description": "KVHS, tum ucret tarifelerini internet sitesinde yayimlamak ve degisiklikleri en az 7 gun onceden duyurmak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "44",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "reporting-musteri-bilgilendirme",
+          "relation": "implements"
+        }
+      ],
+      "key_values": {
+        "publication": "internet sitesi",
+        "change_notice_period": "7 gun"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "reporting-internet-sitesi",
+      "category": "reporting",
+      "title": "Internet Sitesi Zorunluluklari",
+      "description": "KVHS internet sitesinde faaliyet izni bilgileri, hizmet kosullari, ucret tarifeleri, sikayet proseduru, risk uyarilari ve YK bilgileri yayimlanmalidir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "46",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "reporting-musteri-bilgilendirme",
+          "relation": "implements"
+        },
+        {
+          "target": "reporting-ucret-seffafligi",
+          "relation": "requires"
+        },
+        {
+          "target": "reporting-sikayet-yonetimi",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "required_content": "faaliyet izni, hizmet kosullari, ucretler, sikayet, riskler, YK bilgileri"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "reporting-bagimsiz-denetim",
+      "category": "reporting",
+      "title": "Yillik Bagimsiz Denetim",
+      "description": "KVHS, yillik finansal tablolarini ve sermaye yeterlilik hesaplamalarini SPK listesindeki bagimsiz denetim kurulusuna denetlettirmek zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "50",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "reporting-spk-periyodik",
+          "relation": "implements"
+        },
+        {
+          "target": "capital-teblig-adequacy",
+          "relation": "requires"
+        },
+        {
+          "target": "governance-internal-audit",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "frequency": "yillik",
+        "auditor": "SPK listesindeki bagimsiz denetim kurulusu",
+        "deadline_type": "reporting"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "reporting-ozel-durum-aciklama",
+      "category": "reporting",
+      "title": "Ozel Durum Aciklamalari",
+      "description": "KVHS, faaliyet iznini, sermaye yapisini, YK'yi, ortaklik yapisini veya mali durumu onemli olcude etkileyen gelismeleri kamuya ve SPK'ya derhal aciklamak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "51",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "reporting-spk-periyodik",
+          "relation": "implements"
+        },
+        {
+          "target": "reporting-internet-sitesi",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "timing": "derhal",
+        "scope": "faaliyet izni, sermaye, YK, ortaklik, hizmet, mali durum",
+        "deadline_type": "notification"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "reporting-platform-kesinti",
+      "category": "reporting",
+      "title": "Platform Kesinti ve Ariza Bildirimi",
+      "description": "KVHS, 4 saatten uzun sureli platform kesintilerini veya ciddi arizalari SPK'ya ve musterilere derhal bildirmek zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "49",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "reporting-spk-periyodik",
+          "relation": "implements"
+        },
+        {
+          "target": "technical-felaket-kurtarma",
+          "relation": "triggers"
+        },
+        {
+          "target": "technical-bilgi-sistemleri",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "threshold": "4 saatten uzun kesinti",
+        "notification": "SPK ve musterilere derhal",
+        "deadline_type": "notification"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "reporting-sikayet-kaydi",
+      "category": "reporting",
+      "title": "Sikayet Kayitlarinin Tutulmasi ve Analizi",
+      "description": "KVHS, tum musteri sikayetlerini merkezi sistemde kaydetmek ve uc aylik bazda SPK'ya istatistik raporlamak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "41",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "reporting-sikayet-yonetimi",
+          "relation": "implements"
+        },
+        {
+          "target": "reporting-spk-periyodik",
+          "relation": "requires"
+        },
+        {
+          "target": "reporting-kayit-saklama",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "reporting_frequency": "ucaylik",
+        "reporting_to": "SPK"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "market-integrity-emir-iletim",
+      "category": "market-integrity",
+      "title": "Emir Iletim ve Gerceklestirme Politikasi",
+      "description": "KVHS, musteri emirlerini en iyi fiyat, maliyet, hiz ve gerceklesme olasiliginI dikkate alarak yuruten yazili politika olusturmak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "45",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "market-integrity-manipulation",
+          "relation": "requires"
+        },
+        {
+          "target": "reporting-musteri-bilgilendirme",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "criteria": "en iyi fiyat, maliyet, hiz, gerceklesme olasiligi"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "market-integrity-islem-limitleri",
+      "category": "market-integrity",
+      "title": "Islem Limitleri ve Risk Kontrolleri",
+      "description": "KVHS, musteri bazinda gunluk/haftalik islem limitleri, devre kesici mekanizmasi ve buyuk hacimli islem kontrolleri uygulamak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "48",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "market-integrity-manipulation",
+          "relation": "requires"
+        },
+        {
+          "target": "governance-risk-yonetimi",
+          "relation": "implements"
+        }
+      ],
+      "key_values": {
+        "controls": "gunluk/haftalik limitler, devre kesici, buyuk islem kontrolu"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "market-integrity-piyasa-gozlemi",
+      "category": "market-integrity",
+      "title": "Piyasa Gozetim ve Denetim Sistemi",
+      "description": "KVHS, platformdaki islemleri surekli izlemek, olagan disi islem kaliplarini tespit etmek ve manipulasyon suphesi halinde SPK'ya bildirim yapmak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "52",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "market-integrity-manipulation",
+          "relation": "implements"
+        },
+        {
+          "target": "market-integrity-insider",
+          "relation": "implements"
+        },
+        {
+          "target": "aml-str-reporting",
+          "relation": "triggers"
+        },
+        {
+          "target": "mica-insider-dealing",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {
+        "monitoring": "surekli",
+        "reporting_trigger": "olagan disi islem, manipulasyon suphesi"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "market-integrity-delisting",
+      "category": "market-integrity",
+      "title": "Kripto Varlik Listeden Cikarma (Delisting)",
+      "description": "KVHS, bir kripto varligi listeden cikarirken en az 30 gun onceden musterileri bilgilendirmek ve varlik cekim imkani saglamak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "53",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "licensing-beyaz-liste",
+          "relation": "implements"
+        },
+        {
+          "target": "reporting-musteri-bilgilendirme",
+          "relation": "requires"
+        },
+        {
+          "target": "custody-client-assets",
+          "relation": "triggers"
+        }
+      ],
+      "key_values": {
+        "notice_period": "30 gun",
+        "withdrawal_right": "zorunlu"
+      },
+      "priority": "recommended"
+    },
+    {
+      "id": "market-integrity-yasakli-islemler",
+      "category": "market-integrity",
+      "title": "Yasakli Islemler ve Sinirlamalar",
+      "description": "KVHS'nin kendi hesabina musteri aleyhine islem yapmasi, kripto varlik odunc verme, anonim islemler ve fiyat garantili urun sunmasi yasaklanmistir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "49",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "market-integrity-manipulation",
+          "relation": "implements"
+        },
+        {
+          "target": "governance-cikar-catismasi",
+          "relation": "implements"
+        }
+      ],
+      "key_values": {
+        "prohibited": "kendine islem, odunc verme, anonim islem, fiyat garantisi"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "aml-uyum-birimi",
+      "category": "aml",
+      "title": "AML/CFT Uyum Birimi Zorunlulugu",
+      "description": "KVHS, MASAK mevzuatina uyum icin en az bir uyum gorevlisi istihdam etmek zorundadir. Uyum gorevlisi dogrudan ust yonetime rapor eder",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "42",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "aml-masak-program",
+          "relation": "implements"
+        },
+        {
+          "target": "governance-compliance-officer",
+          "relation": "implements"
+        },
+        {
+          "target": "aml-masak-regulation",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "min_staff": "en az 1 uyum gorevlisi",
+        "reporting_line": "ust yonetim"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "aml-otomatik-islem-izleme",
+      "category": "aml",
+      "title": "Otomatik Islem Izleme Sistemi",
+      "description": "KVHS, supheli islem tespit sistemi kurmak, olagan disi islem kaliplarini ve yuksek tutarli islemleri otomatik olarak izlemek zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "42",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "aml-str-reporting",
+          "relation": "triggers"
+        },
+        {
+          "target": "aml-risk-assessment",
+          "relation": "implements"
+        },
+        {
+          "target": "aml-uyum-birimi",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "system": "otomatik",
+        "triggers": "olagan disi islem, yuksek tutar, risk gostergeleri"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "penalties-ceza-puani-sistemi",
+      "category": "penalties",
+      "title": "Duzenleme Ihlali Ceza Puani Sistemi",
+      "description": "SPK, KVHS duzenleme ihlallerini puanlandirmali ve belirli esigi asmasi halinde faaliyet izninin askiya alinmasi veya iptali islemini baslatabilir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "50",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "law-6362-art99a-idari-para",
+          "relation": "implements"
+        },
+        {
+          "target": "licensing-faaliyet-izni-iptali",
+          "relation": "triggers"
+        }
+      ],
+      "key_values": {
+        "consequence": "faaliyet izni askiya alma/iptal"
+      },
+      "priority": "required"
+    }
+  ]
+}

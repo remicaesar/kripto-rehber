@@ -1,0 +1,168 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Kripto Rehber Obligation Graph",
+  "description": "Schema for Turkish crypto compliance obligation graph nodes",
+  "type": "object",
+  "required": ["nodes"],
+  "properties": {
+    "nodes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/node"
+      }
+    }
+  },
+  "definitions": {
+    "node": {
+      "type": "object",
+      "required": ["id", "category", "title", "description", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "description": "Kebab-case unique identifier"
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "licensing",
+            "aml",
+            "kyc",
+            "travel-rule",
+            "reporting",
+            "custody",
+            "capital",
+            "market-integrity",
+            "penalties",
+            "tax",
+            "technical",
+            "governance",
+            "definitions",
+            "mica-reference",
+            "fatf-reference",
+            "consumer-protection",
+            "transition"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "description": "Short title in Turkish"
+        },
+        "description": {
+          "type": "string",
+          "description": "What this obligation requires, in Turkish"
+        },
+        "source": {
+          "$ref": "#/definitions/source"
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/edge"
+          },
+          "default": []
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["critical", "required", "recommended"],
+          "description": "Obligation priority: critical = license-blocking/penalty-triggering, required = legally mandated, recommended = best practice/future-facing"
+        },
+        "key_values": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "default": {},
+          "description": "Thresholds, dates, amounts — anything a compliance officer needs at a glance"
+        },
+        "last_verified": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "description": "Deprecated. Use get_article_text() to fetch live text from Mevzuat MCP."
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": ["law_type", "law_no"],
+      "additionalProperties": false,
+      "properties": {
+        "law_type": {
+          "type": "string",
+          "enum": [
+            "kanun",
+            "khk",
+            "tuzuk",
+            "kurum_yonetmelik",
+            "teblig",
+            "cbk",
+            "cb_karar",
+            "cb_yonetmelik",
+            "cb_genelge",
+            "mica",
+            "fatf",
+            "external"
+          ]
+        },
+        "law_no": {
+          "type": "string",
+          "description": "Legislation number as used in mevzuat.gov.tr"
+        },
+        "article": {
+          "type": "string",
+          "description": "Approximate article reference (e.g. '35/B', '34'). Used as a search hint for Mevzuat MCP, not an authoritative citation. Use get_article_text() for live text."
+        },
+        "title": {
+          "type": "string",
+          "description": "Official title of the legislation"
+        },
+        "mcp_search": {
+          "type": "object",
+          "description": "Pre-configured params for fetching this source via Mevzuat MCP",
+          "additionalProperties": false,
+          "properties": {
+            "tool": {
+              "type": "string",
+              "description": "Mevzuat MCP tool name (e.g. search_within_kanun)"
+            },
+            "params": {
+              "type": "object",
+              "additionalProperties": true,
+              "description": "Parameters to pass to the tool"
+            }
+          }
+        }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "required": ["target", "relation"],
+      "additionalProperties": false,
+      "properties": {
+        "target": {
+          "type": "string",
+          "description": "Target node ID"
+        },
+        "relation": {
+          "type": "string",
+          "enum": [
+            "legal_basis",
+            "implements",
+            "requires",
+            "triggers",
+            "defines",
+            "penalizes",
+            "tr_eu_equivalent",
+            "amends",
+            "references"
+          ]
+        },
+        "note": {
+          "type": "string",
+          "description": "Optional clarification of the relationship"
+        }
+      }
+    }
+  }
+}

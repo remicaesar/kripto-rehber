@@ -1,0 +1,786 @@
+{
+  "nodes": [
+    {
+      "id": "aml-cdd-standard",
+      "category": "aml",
+      "title": "Standart Musteri Durum Tespiti (CDD)",
+      "description": "KVHS, tum musteriler icin kimlik bilgileri, adres, meslek, gelir kaynagi ve islem amacini belirlemek uzere standart musteri durum tespiti yapmak zorundadir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "5549",
+        "article": "3",
+        "title": "Suc Gelirlerinin Aklanmasinin Onlenmesi Hakkinda Kanun",
+        "mcp_search": {
+          "tool": "search_within_kanun",
+          "params": {
+            "mevzuat_no": "5549",
+            "keyword": "musteri taninmasi",
+            "mevzuat_tertip": "5"
+          }
+        }
+      },
+      "edges": [
+        {
+          "target": "kyc-identity-threshold",
+          "relation": "implements"
+        },
+        {
+          "target": "aml-law-5549-base",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "aml-cdd-simplified",
+          "relation": "triggers"
+        },
+        {
+          "target": "aml-cdd-enhanced",
+          "relation": "triggers"
+        }
+      ],
+      "key_values": {
+        "scope": "tum musteriler",
+        "elements": "kimlik, adres, meslek, gelir kaynagi, islem amaci"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "aml-cdd-simplified",
+      "category": "aml",
+      "title": "Basitlestirilmis Musteri Durum Tespiti",
+      "description": "Dusuk riskli musteriler icin basitlestirilmis tedbirler uygulanabilir. Ancak kripto varlik islemlerinde basitlestirilmis tedbirlerin uygulanabilecegi haller sinirlidir",
+      "source": {
+        "law_type": "kurum_yonetmelik",
+        "law_no": "MASAK-2024",
+        "article": "basitlestirilmis tedbirler",
+        "title": "MASAK Yonetmeligi (Aralik 2024)"
+      },
+      "edges": [
+        {
+          "target": "aml-cdd-standard",
+          "relation": "implements"
+        },
+        {
+          "target": "aml-risk-assessment",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "applicability": "sinirli, dusuk riskli musteriler"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "aml-cdd-enhanced",
+      "category": "aml",
+      "title": "Guclendirilmis Musteri Durum Tespiti (EDD)",
+      "description": "Yuksek riskli musteriler, PEP'ler, yuksek riskli ulke baglantili islemler ve 15.000 TL ustu islemler icin guclendirilmis tedbirler zorunludur",
+      "source": {
+        "law_type": "kurum_yonetmelik",
+        "law_no": "MASAK-2024",
+        "article": "guclendirilmis tedbirler",
+        "title": "MASAK Yonetmeligi (Aralik 2024)"
+      },
+      "edges": [
+        {
+          "target": "aml-cdd-standard",
+          "relation": "implements"
+        },
+        {
+          "target": "kyc-enhanced-dd",
+          "relation": "implements"
+        },
+        {
+          "target": "aml-pep-handling",
+          "relation": "requires"
+        },
+        {
+          "target": "aml-risk-assessment",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "triggers": "yuksek risk, PEP, yuksek riskli ulke, 15.000 TL ustu"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "aml-pep-handling",
+      "category": "aml",
+      "title": "Siyasi Nufuz Sahibi Kisiler (PEP) Yonetimi",
+      "description": "KVHS, PEP'leri tespit etmek, ust yonetim onayi almak, varlik kaynaklarini belirlemek ve islemleri yakindan izlemek zorundadir",
+      "source": {
+        "law_type": "kurum_yonetmelik",
+        "law_no": "MASAK-2024",
+        "article": "PEP",
+        "title": "MASAK Yonetmeligi (Aralik 2024)"
+      },
+      "edges": [
+        {
+          "target": "aml-cdd-enhanced",
+          "relation": "implements"
+        },
+        {
+          "target": "governance-sanctions-screening",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "requirements": "tespit, ust yonetim onayi, varlik kaynagi, yakin izleme"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "aml-ongoing-monitoring",
+      "category": "aml",
+      "title": "Surekli Izleme Yukumlulugu",
+      "description": "KVHS, musteri islemlerini musteri profili ve risk duzeyi ile tutarli olup olmadigini surekli izlemek ve uyumsuzluk halinde guclendirilmis tedbirler uygulamak zorundadir",
+      "source": {
+        "law_type": "kurum_yonetmelik",
+        "law_no": "MASAK-2024",
+        "article": "surekli izleme",
+        "title": "MASAK Yonetmeligi (Aralik 2024)"
+      },
+      "edges": [
+        {
+          "target": "aml-cdd-standard",
+          "relation": "requires"
+        },
+        {
+          "target": "aml-otomatik-islem-izleme",
+          "relation": "implements"
+        },
+        {
+          "target": "aml-str-reporting",
+          "relation": "triggers"
+        }
+      ],
+      "key_values": {
+        "scope": "tum musteri islemleri",
+        "action_on_mismatch": "guclendirilmis tedbirler"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "aml-ctr-reporting",
+      "category": "reporting",
+      "title": "Buyuk Tutarli Islem Bildirimi (CTR)",
+      "description": "KVHS, 75.000 TL ve uzerindeki nakit islemleri ile 15.000 TL ve uzerindeki kripto varlik transferlerini MASAK'a bildirmek zorundadir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "5549",
+        "article": "4",
+        "title": "Suc Gelirlerinin Aklanmasinin Onlenmesi Hakkinda Kanun"
+      },
+      "edges": [
+        {
+          "target": "aml-law-5549-base",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "aml-str-reporting",
+          "relation": "references"
+        }
+      ],
+      "key_values": {
+        "cash_threshold": "75.000 TL",
+        "crypto_threshold": "15.000 TL",
+        "report_to": "MASAK"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "aml-str-timeline",
+      "category": "reporting",
+      "title": "Supheli Islem Bildirimi Suresi ve Formati",
+      "description": "Supheli islem tespitinden itibaren en gec 10 is gunu icinde MASAK'a bildirim yapilmalidir. Bildirim elektronik ortamda MASAK portalinden gonderilir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "5549",
+        "article": "4",
+        "title": "Suc Gelirlerinin Aklanmasinin Onlenmesi Hakkinda Kanun",
+        "mcp_search": {
+          "tool": "search_within_kanun",
+          "params": {
+            "mevzuat_no": "5549",
+            "keyword": "supheli islem bildirimi sure",
+            "mevzuat_tertip": "5"
+          }
+        }
+      },
+      "edges": [
+        {
+          "target": "aml-str-reporting",
+          "relation": "implements"
+        },
+        {
+          "target": "aml-law-5549-base",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {
+        "deadline": "10 is gunu",
+        "format": "elektronik, MASAK portali",
+        "penalty_for_delay": "idari para cezasi",
+        "deadline_type": "notification"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "aml-masak-bilgi-talebi",
+      "category": "aml",
+      "title": "MASAK Bilgi ve Belge Talebi",
+      "description": "MASAK'in talep ettigi her turlu bilgi ve belge, talep tarihinden itibaren 7 gun icinde MASAK'a iletilmek zorundadir. Bu yukumluluk bankacilik sirri dahil tum gizlilik sinirlamalarini asan bir yetki tasir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "5549",
+        "article": "5",
+        "title": "Suc Gelirlerinin Aklanmasinin Onlenmesi Hakkinda Kanun",
+        "mcp_search": {
+          "tool": "search_within_kanun",
+          "params": {
+            "mevzuat_no": "5549",
+            "keyword": "bilgi belge talebi",
+            "mevzuat_tertip": "5"
+          }
+        }
+      },
+      "edges": [
+        {
+          "target": "aml-law-5549-base",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "aml-record-keeping",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "deadline": "7 gun",
+        "overrides": "bankacilik sirri dahil tum gizlilik sinirlamalari",
+        "deadline_type": "notification"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "aml-elektronik-izleme",
+      "category": "aml",
+      "title": "Elektronik Izleme Sistemi",
+      "description": "KVHS, islemlerin elektronik ortamda izlenmesi, supheli islemlerin otomatik tespiti ve MASAK'a elektronik bildirim yapilmasi icin teknik altyapi kurmak zorundadir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "5549",
+        "article": "15",
+        "title": "Suc Gelirlerinin Aklanmasinin Onlenmesi Hakkinda Kanun"
+      },
+      "edges": [
+        {
+          "target": "aml-otomatik-islem-izleme",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "aml-law-5549-base",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "technical-bilgi-sistemleri",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "system": "elektronik izleme ve otomatik tespit"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "aml-egitim-programi",
+      "category": "aml",
+      "title": "AML/CFT Egitim Programi Detaylari",
+      "description": "KVHS, tum calisanlara ise baslamada ve yilda en az bir kez AML/CFT egitimi vermek zorundadir. Egitim; mevzuat, supheli islem gostergeleri, bildirim surecleri ve senaryo calismalari icermelidir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "5549",
+        "article": "7",
+        "title": "Suc Gelirlerinin Aklanmasinin Onlenmesi Hakkinda Kanun"
+      },
+      "edges": [
+        {
+          "target": "governance-training",
+          "relation": "implements"
+        },
+        {
+          "target": "aml-masak-program",
+          "relation": "requires"
+        },
+        {
+          "target": "aml-law-5549-base",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {
+        "frequency": "ise baslamada + yilda en az 1",
+        "content": "mevzuat, supheli islem gostergeleri, bildirim sureci, senaryo",
+        "deadline_type": "reporting"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "aml-yaptirimi-tarama",
+      "category": "aml",
+      "title": "Yaptirim Listesi Tarama Yukumlulugu",
+      "description": "KVHS, tum musterileri ve islem taraflarini BM, OFAC, AB ve MASAK yaptirim listelerine karsi gercek zamanli taramak zorundadir",
+      "source": {
+        "law_type": "kurum_yonetmelik",
+        "law_no": "MASAK-2024",
+        "article": "yaptirim tarama",
+        "title": "MASAK Yonetmeligi (Aralik 2024)"
+      },
+      "edges": [
+        {
+          "target": "governance-sanctions-screening",
+          "relation": "implements"
+        },
+        {
+          "target": "aml-masak-regulation",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "aml-cdd-standard",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "lists": "BM, OFAC, AB, MASAK",
+        "timing": "gercek zamanli"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "aml-muhabir-iliski",
+      "category": "aml",
+      "title": "Muhabir Iliski Gereksinimleri",
+      "description": "KVHS, diger KVHS'ler veya finansal kuruluslarla muhabir iliski kurmadan once karsi tarafin AML/CFT uyum durumunu degerlendirmek ve ust yonetim onayi almak zorundadir",
+      "source": {
+        "law_type": "kurum_yonetmelik",
+        "law_no": "MASAK-2024",
+        "article": "muhabir iliski",
+        "title": "MASAK Yonetmeligi (Aralik 2024)"
+      },
+      "edges": [
+        {
+          "target": "aml-masak-regulation",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "aml-cdd-enhanced",
+          "relation": "requires"
+        },
+        {
+          "target": "travel-rule-obligations",
+          "relation": "triggers"
+        }
+      ],
+      "key_values": {
+        "requirements": "AML uyum degerlendirmesi, ust yonetim onayi"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "aml-gercek-faydalanici-kayit",
+      "category": "aml",
+      "title": "Gercek Faydalanici Kayit Sistemi",
+      "description": "KVHS, tuzel kisi musterilerin gercek faydalanicisini %25 ve uzerinde pay sahipligi veya kontrol yetkisi kriterine gore tespit etmek ve kayit altina almak zorundadir",
+      "source": {
+        "law_type": "kurum_yonetmelik",
+        "law_no": "MASAK-2024",
+        "article": "gercek faydalanici",
+        "title": "MASAK Yonetmeligi (Aralik 2024)"
+      },
+      "edges": [
+        {
+          "target": "kyc-beneficial-owner",
+          "relation": "implements"
+        },
+        {
+          "target": "aml-cdd-standard",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "threshold": "%25 pay sahipligi veya kontrol yetkisi"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "penalties-5549-art13-idari",
+      "category": "penalties",
+      "title": "Kanun 5549 Madde 13 - Idari Yaptirimlar",
+      "description": "Musteri taninmasi, kimlik tespiti, bilgi belge saklama yukumluluklarinin ihlali halinde 30.000 TL'den 1.000.000 TL'ye kadar idari para cezasi uygulanir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "5549",
+        "article": "13",
+        "title": "Suc Gelirlerinin Aklanmasinin Onlenmesi Hakkinda Kanun",
+        "mcp_search": {
+          "tool": "search_within_kanun",
+          "params": {
+            "mevzuat_no": "5549",
+            "keyword": "idari para cezasi",
+            "mevzuat_tertip": "5"
+          }
+        }
+      },
+      "edges": [
+        {
+          "target": "aml-law-5549-base",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "aml-cdd-standard",
+          "relation": "penalizes"
+        },
+        {
+          "target": "aml-record-keeping",
+          "relation": "penalizes"
+        },
+        {
+          "target": "penalties-aml-violation",
+          "relation": "implements"
+        }
+      ],
+      "key_values": {
+        "min_fine": "30.000 TL",
+        "max_fine": "1.000.000 TL"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "penalties-5549-art14-str",
+      "category": "penalties",
+      "title": "Kanun 5549 Madde 14 - STR Bildirim Ihlali",
+      "description": "Supheli islem bildiriminde bulunmayan veya geciktiren KVHS'lere 50.000 TL'den 2.000.000 TL'ye kadar idari para cezasi uygulanir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "5549",
+        "article": "14",
+        "title": "Suc Gelirlerinin Aklanmasinin Onlenmesi Hakkinda Kanun"
+      },
+      "edges": [
+        {
+          "target": "aml-law-5549-base",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "aml-str-reporting",
+          "relation": "penalizes"
+        },
+        {
+          "target": "penalties-str-failure",
+          "relation": "implements"
+        }
+      ],
+      "key_values": {
+        "min_fine": "50.000 TL",
+        "max_fine": "2.000.000 TL"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "kvkk-veri-isleme",
+      "category": "technical",
+      "title": "KYC Kapsaminda Kisisel Veri Isleme",
+      "description": "KVHS, KYC surecinde toplanan kisisel verileri KVKK kapsaminda acik riza veya kanuni yetki dayanagi ile islemek, isleme amaci ve suresi hakkinda musterileri bilgilendirmek zorundadir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6698",
+        "article": "5-6",
+        "title": "Kisisel Verilerin Korunmasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "kyc-identity-threshold",
+          "relation": "requires"
+        },
+        {
+          "target": "technical-musteri-veri-koruma",
+          "relation": "implements"
+        },
+        {
+          "target": "mica-data-protection",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {
+        "basis": "acik riza veya kanuni yetki",
+        "information": "isleme amaci ve suresi"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "kvkk-veri-saklama-silme",
+      "category": "technical",
+      "title": "Kisisel Veri Saklama ve Silme",
+      "description": "KVHS, isleme amaci ortadan kalkan kisisel verileri silmek, yok etmek veya anonim hale getirmek zorundadir. Ancak AML mevzuati geregi saklama suresi boyunca veriler korunur",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6698",
+        "article": "7",
+        "title": "Kisisel Verilerin Korunmasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "kvkk-veri-isleme",
+          "relation": "requires"
+        },
+        {
+          "target": "aml-record-keeping",
+          "relation": "references"
+        }
+      ],
+      "key_values": {
+        "action": "silme, yok etme veya anonimistirme",
+        "exception": "AML saklama suresi",
+        "deadline_type": "retention"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "kvkk-yurt-disi-aktarim",
+      "category": "technical",
+      "title": "Kisisel Verilerin Yurt Disina Aktarimi",
+      "description": "KVHS, musteri kisisel verilerini yurt disina aktarmak icin KVKK Kurulunun yeterlilik karari veya uygun guvenceleri saglamak zorundadir. Veri merkezi Turkiye zorunlulugu ile birlikte degerlendirilir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6698",
+        "article": "9",
+        "title": "Kisisel Verilerin Korunmasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "kvkk-veri-isleme",
+          "relation": "requires"
+        },
+        {
+          "target": "technical-veri-merkezi",
+          "relation": "references"
+        }
+      ],
+      "key_values": {
+        "requirement": "KVKK Kurulu yeterlilik karari veya uygun guvence"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "kvkk-veri-ihlali-bildirim",
+      "category": "technical",
+      "title": "Veri Ihlali Bildirim Yukumlulugu",
+      "description": "Kisisel veri ihlali halinde KVHS, en kisa surede ve en gec 72 saat icinde KVKK Kuruluna, makul surede ilgili kisilere bildirim yapmak zorundadir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6698",
+        "article": "12",
+        "title": "Kisisel Verilerin Korunmasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "kvkk-veri-isleme",
+          "relation": "requires"
+        },
+        {
+          "target": "technical-olay-mudahale",
+          "relation": "triggers"
+        },
+        {
+          "target": "technical-musteri-veri-koruma",
+          "relation": "implements"
+        }
+      ],
+      "key_values": {
+        "deadline": "72 saat",
+        "notify": "KVKK Kurulu ve ilgili kisiler",
+        "deadline_type": "notification"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "reporting-gib-vergi",
+      "category": "reporting",
+      "title": "GIB Vergi Raporlamasi",
+      "description": "KVHS, musteri bazinda kripto varlik islem bilgilerini Gelir Idaresi Baskanligi'na (GIB) yillik olarak bildirmek zorundadir. Bildirim elektronik ortamda yapilir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "213",
+        "article": "bilgi verme",
+        "title": "Vergi Usul Kanunu"
+      },
+      "edges": [
+        {
+          "target": "tax-declaration-obligation",
+          "relation": "implements"
+        },
+        {
+          "target": "tax-vuk-bookkeeping",
+          "relation": "requires"
+        },
+        {
+          "target": "reporting-kayit-saklama",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "frequency": "yillik",
+        "format": "elektronik",
+        "submit_to": "GIB",
+        "deadline_type": "reporting"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "reporting-tcmb-doviz",
+      "category": "reporting",
+      "title": "TCMB Doviz ve Disticaret Bildirimi",
+      "description": "Yurt disina kripto varlik transferi yapan KVHS, TCMB'ye sermaye hareketleri kapsaminda bildirim yapmak zorunda olabilir. Uygulama detaylari TCMB tebligleri ile belirlenir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "1567",
+        "article": "1",
+        "title": "Turk Parasinin Kiymetini Koruma Hakkinda Kanun"
+      },
+      "edges": [
+        {
+          "target": "travel-rule-obligations",
+          "relation": "references"
+        },
+        {
+          "target": "aml-masak-regulation",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "scope": "yurt disi kripto varlik transferleri",
+        "submit_to": "TCMB"
+      },
+      "priority": "recommended"
+    },
+    {
+      "id": "travel-rule-esik-tutar",
+      "category": "travel-rule",
+      "title": "Travel Rule Esik Tutari",
+      "description": "1.000 EUR/TL karsiligindan baslayan tum kripto varlik transferlerinde gonderen ve alici bilgilerinin iletilmesi zorunludur. FATF R.16 uyumlu",
+      "source": {
+        "law_type": "kurum_yonetmelik",
+        "law_no": "MASAK-2024",
+        "article": "transfer kurallari",
+        "title": "MASAK Yonetmeligi (Aralik 2024)"
+      },
+      "edges": [
+        {
+          "target": "travel-rule-obligations",
+          "relation": "implements"
+        },
+        {
+          "target": "travel-rule-sender-data",
+          "relation": "triggers"
+        },
+        {
+          "target": "travel-rule-receiver-data",
+          "relation": "triggers"
+        },
+        {
+          "target": "fatf-r16",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {
+        "threshold": "1.000 EUR/TL karsiligi"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "travel-rule-sunrise-donem",
+      "category": "travel-rule",
+      "title": "Travel Rule Sunrise Donemi",
+      "description": "Travel rule uygulamasi icin gecis sureci tanimlanmistir. KVHS'ler belirli tarihten itibaren tam uyum saglamak zorundadir",
+      "source": {
+        "law_type": "kurum_yonetmelik",
+        "law_no": "MASAK-2024",
+        "article": "gecis sureci",
+        "title": "MASAK Yonetmeligi (Aralik 2024)"
+      },
+      "edges": [
+        {
+          "target": "travel-rule-obligations",
+          "relation": "implements"
+        },
+        {
+          "target": "travel-rule-esik-tutar",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "status": "gecis doneminde",
+        "deadline_type": "transition"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "aml-ic-denetim",
+      "category": "aml",
+      "title": "AML/CFT Ic Denetim Yukumlulugu",
+      "description": "KVHS, AML/CFT uyum programinin etkinligini yilda en az bir kez bagimsiz ic denetim veya dis denetim yoluyla degerlendirmek zorundadir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "5549",
+        "article": "6",
+        "title": "Suc Gelirlerinin Aklanmasinin Onlenmesi Hakkinda Kanun"
+      },
+      "edges": [
+        {
+          "target": "aml-masak-program",
+          "relation": "implements"
+        },
+        {
+          "target": "governance-internal-audit",
+          "relation": "requires"
+        },
+        {
+          "target": "aml-law-5549-base",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {
+        "frequency": "yilda en az 1",
+        "type": "bagimsiz ic veya dis denetim",
+        "deadline_type": "reporting"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "aml-risk-degerlendirme-raporu",
+      "category": "aml",
+      "title": "Kurumsal Risk Degerlendirmesi Raporu",
+      "description": "KVHS, musteri, urun/hizmet, dagitim kanali ve ulke risklerini kapsayan yazili bir kurumsal risk degerlendirmesi hazirlamak ve yilda en az bir kez guncellemek zorundadir",
+      "source": {
+        "law_type": "kurum_yonetmelik",
+        "law_no": "MASAK-2024",
+        "article": "risk degerlendirmesi",
+        "title": "MASAK Yonetmeligi (Aralik 2024)"
+      },
+      "edges": [
+        {
+          "target": "aml-risk-assessment",
+          "relation": "implements"
+        },
+        {
+          "target": "aml-masak-program",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "update_frequency": "yillik",
+        "risk_categories": "musteri, urun, kanal, ulke",
+        "deadline_type": "reporting"
+      },
+      "priority": "required"
+    }
+  ]
+}

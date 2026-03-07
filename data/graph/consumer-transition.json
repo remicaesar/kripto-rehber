@@ -1,0 +1,880 @@
+{
+  "nodes": [
+    {
+      "id": "def-dlt",
+      "category": "definitions",
+      "title": "Dagitik Defter Teknolojisi (DLT) Tanimi",
+      "description": "Birden fazla katilimci tarafindan paylasilan, eslenen ve senkronize edilen dijital verilerin yer aldigi teknoloji",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "3/1-z",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "def-crypto-asset",
+          "relation": "defines"
+        }
+      ],
+      "key_values": {
+        "scope": "kripto varlik tanimi icinde kullanilir"
+      },
+      "priority": "recommended"
+    },
+    {
+      "id": "def-platform-isletmecisi",
+      "category": "definitions",
+      "title": "Platform Isletmecisi Tanimi",
+      "description": "Kripto varlik alim satim platformunu isletmeye yetkili kilinmis KVHS",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "3",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "def-kvhs",
+          "relation": "defines"
+        },
+        {
+          "target": "def-platform",
+          "relation": "defines"
+        }
+      ],
+      "key_values": {},
+      "priority": "recommended"
+    },
+    {
+      "id": "def-ilk-satis",
+      "category": "definitions",
+      "title": "Ilk Kripto Varlik Satisi (ICO/IEO) Tanimi",
+      "description": "Kripto varliklarin ilk kez halka arz edilmesi veya yatirimcilara sunulmasi islemleri",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "35/C",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "def-crypto-asset",
+          "relation": "references"
+        },
+        {
+          "target": "licensing-spk-permit",
+          "relation": "requires"
+        },
+        {
+          "target": "mica-white-paper",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {
+        "scope": "SPK izni gerektirir"
+      },
+      "priority": "recommended"
+    },
+    {
+      "id": "consumer-risk-uyarisi",
+      "category": "consumer-protection",
+      "title": "Risk Uyarisi Zorunlulugu",
+      "description": "KVHS, musterilerine kripto varlik islemlerinin yuksek risk icerdigini, yatirilan tutarin tamamen kaybedilebilecegini acik ve belirgin sekilde bildirmek zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "31",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "reporting-musteri-bilgilendirme",
+          "relation": "implements"
+        },
+        {
+          "target": "consumer-bilgilendirme",
+          "relation": "requires"
+        },
+        {
+          "target": "mica-complaints-handling",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {
+        "display": "acik ve belirgin",
+        "content": "sermaye kaybi riski",
+        "deadline_type": "customer_right"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "consumer-bilgilendirme",
+      "category": "consumer-protection",
+      "title": "Musteri Bilgilendirme Yuku",
+      "description": "KVHS, sundugu hizmetlerin niteligi, riskleri, ucretler, komisyonlar ve islem kosullari hakkinda musterilerini islem oncesinde yeterli duzeyde bilgilendirmek zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "30",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "reporting-ucret-seffafligi",
+          "relation": "requires"
+        },
+        {
+          "target": "reporting-internet-sitesi",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "timing": "islem oncesi",
+        "scope": "hizmet niteligi, riskler, ucretler",
+        "deadline_type": "customer_right"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "consumer-cayma-hakki",
+      "category": "consumer-protection",
+      "title": "Cayma Hakki ve Iptal Kosullari",
+      "description": "Musteri, cerceve sozlesme imzalanmasindan itibaren 14 gun icinde hicbir gerekce gostermeksizin cayma hakkini kullanabilir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "32",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "kyc-musteri-sozlesme",
+          "relation": "requires"
+        },
+        {
+          "target": "consumer-bilgilendirme",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "period": "14 gun",
+        "condition": "gerekce gerekmez",
+        "deadline_type": "customer_right"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "consumer-sikayet-sureci",
+      "category": "consumer-protection",
+      "title": "Sikayet Degerlendirme Sureci",
+      "description": "KVHS, musteri sikayetlerini en gec 20 is gunu icinde sonuclandirmak ve musteriye yazili bildirimde bulunmak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "33",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "reporting-sikayet-kaydi",
+          "relation": "implements"
+        },
+        {
+          "target": "mica-complaints-handling",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {
+        "deadline": "20 is gunu",
+        "notification": "yazili",
+        "deadline_type": "customer_right"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "consumer-varlik-guvencesi",
+      "category": "consumer-protection",
+      "title": "Musteri Varlik Guvencesi",
+      "description": "KVHS nezdindeki musteri varliklari KVHS'nin mal varligindan ayridir, haciz, iflas veya tasfiyelerde KVHS alacaklilari tarafindan talep edilemez",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "35/B",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "custody-varlik-ayristirma",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "custody-cold-hot-wallet",
+          "relation": "requires"
+        },
+        {
+          "target": "consumer-tazmin-fonu",
+          "relation": "triggers"
+        }
+      ],
+      "key_values": {
+        "protection": "haciz ve iflastan korunma",
+        "scope": "tum musteri varliklari"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "consumer-tazmin-fonu",
+      "category": "consumer-protection",
+      "title": "Yatirimci Tazmin Merkezi Kapsami",
+      "description": "KVHS musterileri, Yatirimci Tazmin Merkezi (YTM) kapsaminda belirli sinirlar dahilinde tazminat hakkindan yararlanabilir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "83",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "consumer-varlik-guvencesi",
+          "relation": "requires"
+        },
+        {
+          "target": "licensing-spk-permit",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "mechanism": "Yatirimci Tazmin Merkezi"
+      },
+      "priority": "recommended"
+    },
+    {
+      "id": "consumer-reklam-kurallari",
+      "category": "consumer-protection",
+      "title": "Kripto Varlik Reklam Kurallari",
+      "description": "KVHS reklamlari yaniltici olamaz, garantili getiri vaadi iceremez, risk uyarisi icermek zorundadir ve SPK duzenlenmelerine uygun olmalidir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "34",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "reporting-reklam-kurallari",
+          "relation": "implements"
+        },
+        {
+          "target": "consumer-risk-uyarisi",
+          "relation": "requires"
+        },
+        {
+          "target": "law-6362-art99a-idari-para",
+          "relation": "penalizes"
+        }
+      ],
+      "key_values": {
+        "prohibited": "garantili getiri vaadi",
+        "required": "risk uyarisi"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "consumer-uyusmazlik-cozum",
+      "category": "consumer-protection",
+      "title": "Uyusmazlik Cozum Mekanizmasi",
+      "description": "KVHS ile musteri arasindaki uyusmazliklarda once KVHS bnyesindeki sikayet mekanizmasi, ardindan SPK'ya basvuru ve tuketici hakem heyetleri devreye girer",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "35",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "consumer-sikayet-sureci",
+          "relation": "requires"
+        },
+        {
+          "target": "licensing-spk-permit",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "stages": "KVHS sikayet, SPK basvuru, tuketici hakem heyeti"
+      },
+      "priority": "recommended"
+    },
+    {
+      "id": "consumer-fiyat-seffaflik",
+      "category": "consumer-protection",
+      "title": "Fiyat Seffafligi Zorunlulugu",
+      "description": "KVHS, islem goren kripto varliklarin fiyat bilgilerini, islem hacimlerini ve fiyat degisim oranlarini gercek zamanli olarak yayinlamak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "36",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "reporting-ucret-seffafligi",
+          "relation": "requires"
+        },
+        {
+          "target": "market-integrity-piyasa-gozlemi",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "data": "fiyat, hacim, degisim orani",
+        "frequency": "gercek zamanli",
+        "deadline_type": "customer_right"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "consumer-profesyonel-sigorta",
+      "category": "consumer-protection",
+      "title": "Mesleki Sorumluluk Sigortasi",
+      "description": "KVHS, operasyonel riskler ve musteri varlik kayiplarina karsi mesleki sorumluluk sigortasi yaptirmak veya ek sermaye karsiligi ayirmak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.2",
+        "article": "13",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Calisma Usul ve Esaslari ile Sermaye Yeterliligi Hakkinda Teblig"
+      },
+      "edges": [
+        {
+          "target": "capital-tampon-sermaye",
+          "relation": "requires"
+        },
+        {
+          "target": "consumer-varlik-guvencesi",
+          "relation": "implements"
+        },
+        {
+          "target": "mica-prudential-safeguards",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {
+        "alternatives": "sigorta veya ek sermaye karsiligi"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "transition-gecis-suresi",
+      "category": "transition",
+      "title": "Mevcut KVHS Gecis Suresi",
+      "description": "Kanun 7518 yururluge girdigi tarihte faaliyette olan kripto varlik hizmet saglayicilari, 1 yil icinde SPK'ya basvurarak faaliyet izni almak zorundadir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "7518",
+        "article": "gecici madde 1",
+        "title": "Sermaye Piyasasi Kanunu Degisikligi"
+      },
+      "edges": [
+        {
+          "target": "licensing-spk-permit",
+          "relation": "requires"
+        },
+        {
+          "target": "transition-basvuru-sureci",
+          "relation": "triggers"
+        },
+        {
+          "target": "transition-faaliyet-durdurma",
+          "relation": "triggers"
+        }
+      ],
+      "key_values": {
+        "deadline": "1 yil",
+        "effective": "02.07.2024",
+        "scope": "mevcut faaliyetteki KVHS",
+        "deadline_type": "transition"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "transition-basvuru-sureci",
+      "category": "transition",
+      "title": "Gecis Donemi Basvuru Sureci",
+      "description": "Mevcut KVHS'ler, gecis surecinde SPK'ya lisans basvurusu yaparken mevcut islemlere devam edebilir ancak yeni hizmet turune baslayamaz",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "7518",
+        "article": "gecici madde 1",
+        "title": "Sermaye Piyasasi Kanunu Degisikligi"
+      },
+      "edges": [
+        {
+          "target": "transition-gecis-suresi",
+          "relation": "implements"
+        },
+        {
+          "target": "licensing-basvuru-belgeleri",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "allowed": "mevcut islemlere devam",
+        "prohibited": "yeni hizmet turu",
+        "deadline_type": "transition"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "transition-faaliyet-durdurma",
+      "category": "transition",
+      "title": "Gecis Surecinde Faaliyet Durdurma",
+      "description": "Gecis suresi sonunda SPK'dan faaliyet izni alamayan KVHS'ler faaliyetlerini derhal durdurmak ve musteri varliklarini 3 ay icinde iade etmek zorundadir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "7518",
+        "article": "gecici madde 2",
+        "title": "Sermaye Piyasasi Kanunu Degisikligi"
+      },
+      "edges": [
+        {
+          "target": "transition-gecis-suresi",
+          "relation": "triggers"
+        },
+        {
+          "target": "transition-musteri-varliklari",
+          "relation": "triggers"
+        },
+        {
+          "target": "law-6362-art109a-izinsiz-faaliyet",
+          "relation": "penalizes"
+        }
+      ],
+      "key_values": {
+        "action": "faaliyetleri derhal durdur",
+        "asset_return": "3 ay icinde",
+        "deadline_type": "transition"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "transition-musteri-varliklari",
+      "category": "transition",
+      "title": "Gecis Doneminde Musteri Varliklari Iadesi",
+      "description": "Faaliyet izni alamayan KVHS, musteri kripto varliklarini ve nakit bakiyelerini musteri talimati dogrultusunda iade eder veya baska yetkili KVHS'ye transfer eder",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "7518",
+        "article": "gecici madde 2",
+        "title": "Sermaye Piyasasi Kanunu Degisikligi"
+      },
+      "edges": [
+        {
+          "target": "transition-faaliyet-durdurma",
+          "relation": "requires"
+        },
+        {
+          "target": "consumer-varlik-guvencesi",
+          "relation": "implements"
+        },
+        {
+          "target": "custody-varlik-ayristirma",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "options": "iade veya yetkili KVHS'ye transfer",
+        "deadline_type": "transition"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "transition-uyum-plani",
+      "category": "transition",
+      "title": "Gecis Donemi Uyum Plani",
+      "description": "Mevcut KVHS'ler, gecis sureci basinda SPK'ya detayli uyum plani sunmak zorundadir: sermaye tamamlama, teknik altyapi, organizasyon yapisi takvimi",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "gecici madde 3",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "transition-gecis-suresi",
+          "relation": "implements"
+        },
+        {
+          "target": "capital-asgari-platform",
+          "relation": "requires"
+        },
+        {
+          "target": "technical-bilgi-sistemleri",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "content": "sermaye, teknik altyapi, organizasyon takvimi",
+        "deadline_type": "transition"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "transition-masak-uyum",
+      "category": "transition",
+      "title": "Gecis Doneminde MASAK Uyumu",
+      "description": "Gecis donemindeki KVHS'ler dahi AML/CFT yukumlulukleri konusunda tam uyum saglamak zorundadir, gecis donemi muafiyeti yoktur",
+      "source": {
+        "law_type": "kurum_yonetmelik",
+        "law_no": "MASAK-2024",
+        "article": "gecici madde",
+        "title": "MASAK Yonetmeligi (Aralik 2024)"
+      },
+      "edges": [
+        {
+          "target": "transition-gecis-suresi",
+          "relation": "requires"
+        },
+        {
+          "target": "aml-uyum-birimi",
+          "relation": "requires"
+        },
+        {
+          "target": "aml-cdd-standard",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "exemption": "yok",
+        "scope": "tam AML/CFT uyumu zorunlu",
+        "deadline_type": "transition"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "crossborder-yurtdisi-kvhs",
+      "category": "licensing",
+      "title": "Yurt Disi KVHS Yasagi",
+      "description": "Turkiye'de yerlesik kisilere yonelik kripto varlik hizmeti sunmak isteyen yabanci kuruluslar SPK'dan izin almak zorundadir, izinsiz hizmet yasaktir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "35/B",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "licensing-spk-permit",
+          "relation": "requires"
+        },
+        {
+          "target": "law-6362-art109a-izinsiz-faaliyet",
+          "relation": "penalizes"
+        },
+        {
+          "target": "crossborder-erisim-engeli",
+          "relation": "triggers"
+        }
+      ],
+      "key_values": {
+        "scope": "Turkiye'de yerlesik kisilere yonelik hizmet"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "crossborder-erisim-engeli",
+      "category": "licensing",
+      "title": "Izinsiz Platformlara Erisim Engeli",
+      "description": "SPK, Turkiye'de izinsiz faaliyet gosteren yurt disi kripto varlik platformlarina erisim engeli uygulanmasini BTK'dan talep edebilir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "99/A",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "crossborder-yurtdisi-kvhs",
+          "relation": "penalizes"
+        },
+        {
+          "target": "licensing-spk-permit",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "mechanism": "BTK erisim engeli",
+        "authority": "SPK talebi"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "crossborder-uluslararasi-isbirligi",
+      "category": "licensing",
+      "title": "Uluslararasi Duzenleyici Isbirligi",
+      "description": "SPK, yabanci duzenleme ve denetim otoriteleri ile kripto varlik hizmetleri kapsaminda bilgi paylasimi ve isbirligi yapabilir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "97",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "crossborder-yurtdisi-kvhs",
+          "relation": "requires"
+        },
+        {
+          "target": "aml-masak-bilgi-talebi",
+          "relation": "references"
+        }
+      ],
+      "key_values": {
+        "scope": "bilgi paylasimi ve isbirligi"
+      },
+      "priority": "recommended"
+    },
+    {
+      "id": "penalty-spk-para-cezasi",
+      "category": "penalties",
+      "title": "SPK Idari Para Cezalari Detay",
+      "description": "SPK, teblig hukumlerini ihlal eden KVHS'lere 100.000 TL ile 5.000.000 TL arasinda idari para cezasi uygulayabilir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "103",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "law-6362-art99a-idari-para",
+          "relation": "implements"
+        },
+        {
+          "target": "licensing-spk-permit",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "min": "100.000 TL",
+        "max": "5.000.000 TL"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "penalty-piyasa-dolandiriciligi",
+      "category": "penalties",
+      "title": "Kripto Varlik Piyasasi Dolandiriciligi",
+      "description": "Kripto varlik fiyatlarini manipule etmek, yaniltici bilgi yaymak veya yapay piyasa olusturmak 2-5 yil hapis ve adli para cezasi gerektirir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "107",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "market-integrity-piyasa-gozlemi",
+          "relation": "penalizes"
+        },
+        {
+          "target": "market-integrity-yasakli-islemler",
+          "relation": "penalizes"
+        },
+        {
+          "target": "mica-insider-dealing",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {
+        "prison": "2-5 yil",
+        "scope": "fiyat manipulasyonu, yaniltici bilgi, yapay piyasa"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "penalty-bildirim-ihlali",
+      "category": "penalties",
+      "title": "Bildirim ve Raporlama Ihlali Cezasi",
+      "description": "SPK'ya yapilmasi gereken bildirimleri suresi icinde yapmayan veya yanlis bildirimde bulunan KVHS'lere 50.000 TL'den baslayan idari para cezasi uygulanir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "103/2",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "capital-sinir-asimi-bildirimi",
+          "relation": "penalizes"
+        },
+        {
+          "target": "capital-aylik-raporlama",
+          "relation": "penalizes"
+        },
+        {
+          "target": "reporting-spk-periyodik",
+          "relation": "penalizes"
+        }
+      ],
+      "key_values": {
+        "min": "50.000 TL",
+        "scope": "bildirim ve raporlama ihlalleri"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "governance-ic-denetim",
+      "category": "governance",
+      "title": "Ic Denetim Birimi Zorunlulugu",
+      "description": "KVHS, bagimsiz bir ic denetim birimi kurmak ve yilda en az bir kez tum faaliyetlerini kapsayan denetim raporu hazirlamak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "18",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "governance-ic-kontrol",
+          "relation": "requires"
+        },
+        {
+          "target": "reporting-spk-periyodik",
+          "relation": "triggers"
+        },
+        {
+          "target": "mica-outsourcing",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {
+        "frequency": "yilda en az 1",
+        "scope": "tum faaliyetler",
+        "deadline_type": "reporting"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "governance-uyum-gorevlisi",
+      "category": "governance",
+      "title": "Uyum Gorevlisi Atamasi",
+      "description": "KVHS, mevzuata uyumun izlenmesi, degerlendirilmesi ve raporlanmasindan sorumlu bir uyum gorevlisi atamak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "19",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "governance-ic-kontrol",
+          "relation": "implements"
+        },
+        {
+          "target": "aml-uyum-birimi",
+          "relation": "requires"
+        },
+        {
+          "target": "governance-ic-denetim",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "role": "mevzuata uyum izleme ve raporlama"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "custody-sigorta",
+      "category": "custody",
+      "title": "Saklama Hizmeti Sigortasi",
+      "description": "KVHS, sakladigi musteri kripto varliklar icin siber saldiri, hata veya diger operasyonel risklere karsi sigorta yaptirmak veya karsilik ayirmak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "25",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "custody-cold-hot-wallet",
+          "relation": "requires"
+        },
+        {
+          "target": "consumer-profesyonel-sigorta",
+          "relation": "implements"
+        },
+        {
+          "target": "technical-siber-guvenlik",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "risks": "siber saldiri, hata, operasyonel risk"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "custody-yedekleme",
+      "category": "custody",
+      "title": "Ozel Anahtar Yedekleme Zorunlulugu",
+      "description": "KVHS, musteri kripto varliklarinin ozel anahtarlarini en az 3 farkli fiziksel lokasyonda yedeklemek ve yedeklerin butunlugunu duzenli test etmek zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.1",
+        "article": "26",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Kurulus ve Faaliyet Esaslarina Iliskin Teblig"
+      },
+      "edges": [
+        {
+          "target": "technical-kripto-anahtar-yonetimi",
+          "relation": "implements"
+        },
+        {
+          "target": "custody-cold-hot-wallet",
+          "relation": "requires"
+        },
+        {
+          "target": "technical-felaket-kurtarma",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "locations": "en az 3 farkli fiziksel lokasyon",
+        "testing": "duzenli butunluk testi"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "kyc-yuksek-risk",
+      "category": "kyc",
+      "title": "Yuksek Riskli Musteri Islemleri",
+      "description": "Yuksek riskli olarak siniflandirilan musterilerin islemleri icin arttirilmis izleme, ek kimlik dogrulama ve ust yonetim onayi gereklidir",
+      "source": {
+        "law_type": "kurum_yonetmelik",
+        "law_no": "MASAK-2024",
+        "article": "12",
+        "title": "MASAK Yonetmeligi (Aralik 2024)"
+      },
+      "edges": [
+        {
+          "target": "kyc-musteri-risk-profili",
+          "relation": "implements"
+        },
+        {
+          "target": "aml-cdd-enhanced",
+          "relation": "requires"
+        },
+        {
+          "target": "aml-ongoing-monitoring",
+          "relation": "triggers"
+        }
+      ],
+      "key_values": {
+        "measures": "arttirilmis izleme, ek kimlik dogrulama, ust yonetim onayi"
+      },
+      "priority": "required"
+    }
+  ]
+}

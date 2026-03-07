@@ -1,0 +1,333 @@
+{
+  "nodes": [
+    {
+      "id": "law-6362-art35b-kurulus",
+      "category": "licensing",
+      "title": "Madde 35/B - KVHS Kurulus Sartlari",
+      "description": "Kripto varlik hizmet saglayicilari yalnizca anonim sirket olarak kurulabilir, SPK'dan faaliyet izni almak zorundadir. Kurucular ve yoneticilerin kanunda sayilan suclardan mahkum olmamis olmasi gerekir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "35/B",
+        "title": "Sermaye Piyasasi Kanunu",
+        "mcp_search": {
+          "tool": "search_within_kanun",
+          "params": {
+            "mevzuat_no": "6362",
+            "keyword": "kripto varlik hizmet saglayici kurulus",
+            "mevzuat_tertip": "5"
+          }
+        }
+      },
+      "edges": [
+        {
+          "target": "def-kvhs",
+          "relation": "defines"
+        },
+        {
+          "target": "licensing-spk-permit",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "licensing-as-requirement",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "licensing-founder-requirements",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {
+        "legal_form": "anonim sirket",
+        "permit_authority": "SPK"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "law-6362-art35b-spk-yetki",
+      "category": "licensing",
+      "title": "Madde 35/B - SPK Duzenleme Yetkisi",
+      "description": "SPK, KVHS'lerin kurulusuna, faaliyet izinlerine, yonetim yapisina, sermaye yeterliliklere, teknik altyapilarina ve diger konulara iliskin usul ve esaslari teblig ile duzenler",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "35/B",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "law-6362-art35b-kurulus",
+          "relation": "implements"
+        },
+        {
+          "target": "licensing-teblig-establishment",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "capital-teblig-adequacy",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {
+        "delegated_to": "SPK tebligleri"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "law-6362-art35c-faaliyet",
+      "category": "licensing",
+      "title": "Madde 35/C - KVHS Faaliyet Esaslari",
+      "description": "KVHS'ler; musteri varliklarini kendi varliklarindan ayirmak, musteri emirlerini en iyi sekilde yerine getirmek, cikar catismalarindan kacinmak ve musterileri yeterince bilgilendirmek zorundadir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "35/C",
+        "title": "Sermaye Piyasasi Kanunu",
+        "mcp_search": {
+          "tool": "search_within_kanun",
+          "params": {
+            "mevzuat_no": "6362",
+            "keyword": "kripto varlik faaliyet esaslari",
+            "mevzuat_tertip": "5"
+          }
+        }
+      },
+      "edges": [
+        {
+          "target": "custody-varlik-ayristirma",
+          "relation": "legal_basis"
+        },
+        {
+          "target": "governance-cikar-catismasi",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {
+        "obligations": "varlik ayristirma, en iyi islem, cikar catismasi yonetimi, musteri bilgilendirme"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "law-6362-art35c-saklama",
+      "category": "custody",
+      "title": "Madde 35/C - Kripto Varlik Saklama Esaslari",
+      "description": "Musteri kripto varliklari KVHS'nin mal varligi disindadir, haciz, rehin veya iflas masasina dahil edilemez. KVHS bu varliklari kendi hesabina kullanamaz",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "35/C",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "custody-client-assets",
+          "relation": "defines"
+        },
+        {
+          "target": "custody-varlik-ayristirma",
+          "relation": "defines"
+        }
+      ],
+      "key_values": {
+        "protection": "haciz/iflas korumasi",
+        "self_dealing": "yasak"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "law-6362-art35c-transfer",
+      "category": "custody",
+      "title": "Madde 35/C - Kripto Varlik Transferi",
+      "description": "KVHS, kripto varlik transferlerini musterinin talimati dogrultusunda, zamaninda ve dogru gerceklestirmek zorundadir. Transfer islemleri geri dondurulmez nitelikte olabilir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "35/C",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "law-6362-art35c-faaliyet",
+          "relation": "implements"
+        },
+        {
+          "target": "travel-rule-obligations",
+          "relation": "triggers"
+        }
+      ],
+      "key_values": {
+        "requirement": "musteri talimati, zamaninda, dogru",
+        "irreversibility_disclosure": "zorunlu"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "law-6362-art99a-idari-para",
+      "category": "penalties",
+      "title": "Madde 99/A - KVHS Idari Para Cezalari",
+      "description": "KVHS'lere yonelik SPK tarafindan uygulanacak idari para cezalari: faaliyet sartlarina aykirilik 1-5 milyon TL, bildirim ihlali 500 bin-2 milyon TL, raporlama eksikligi 250 bin-1 milyon TL",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "99/A",
+        "title": "Sermaye Piyasasi Kanunu",
+        "mcp_search": {
+          "tool": "search_within_kanun",
+          "params": {
+            "mevzuat_no": "6362",
+            "keyword": "idari para cezasi kripto",
+            "mevzuat_tertip": "5"
+          }
+        }
+      },
+      "edges": [
+        {
+          "target": "licensing-spk-permit",
+          "relation": "penalizes"
+        },
+        {
+          "target": "penalties-unlicensed-operation",
+          "relation": "references"
+        }
+      ],
+      "key_values": {
+        "operational_violation": "1.000.000 - 5.000.000 TL",
+        "notification_breach": "500.000 - 2.000.000 TL",
+        "reporting_failure": "250.000 - 1.000.000 TL"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "law-6362-art99a-faaliyet-durdurma",
+      "category": "penalties",
+      "title": "Madde 99/A - Faaliyetin Gecici Durdurulmasi",
+      "description": "SPK, musteri menfaatlerinin korunmasi amaciyla KVHS faaliyetlerini 6 aya kadar gecici olarak durdurabilir. Durdurma karari Resmi Gazete'de ilan edilir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "99/A",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "law-6362-art99a-idari-para",
+          "relation": "triggers"
+        },
+        {
+          "target": "custody-client-assets",
+          "relation": "triggers"
+        }
+      ],
+      "key_values": {
+        "max_suspension": "6 ay",
+        "publication": "Resmi Gazete"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "law-6362-art99a-yonetici-yasak",
+      "category": "penalties",
+      "title": "Madde 99/A - Yoneticilere Yasaklar",
+      "description": "SPK, kanuna aykiri davranan KVHS yoneticilerini gorevden alabilir ve bu kisilerin sermaye piyasasi kurumlarinda 2-5 yil gorev almalarini yasaklayabilir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "99/A",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "law-6362-art99a-idari-para",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "ban_period": "2-5 yil",
+        "scope": "sermaye piyasasi kurumlari"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "law-6362-art109a-izinsiz-faaliyet",
+      "category": "penalties",
+      "title": "Madde 109/A - Izinsiz KVHS Faaliyeti Cezasi",
+      "description": "SPK izni olmaksizin kripto varlik hizmet saglayiciligi faaliyetinde bulunanlar 3 yildan 5 yila kadar hapis ve 5.000 gune kadar adli para cezasi ile cezalandirilir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "109/A",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "penalties-unlicensed-operation",
+          "relation": "implements"
+        },
+        {
+          "target": "licensing-spk-permit",
+          "relation": "penalizes"
+        }
+      ],
+      "key_values": {
+        "imprisonment": "3-5 yil",
+        "judicial_fine": "5.000 gune kadar adli para cezasi"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "law-6362-art110a-zimmet",
+      "category": "penalties",
+      "title": "Madde 110/A - Musteri Varliginda Zimmet",
+      "description": "KVHS yoneticisi veya calisani, musteri kripto varliklarini veya nakitlerini zimmetine gecirirse 5 yildan 12 yila kadar hapis ve 20.000 gune kadar adli para cezasi ile cezalandirilir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "110/A",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "custody-client-assets",
+          "relation": "penalizes"
+        },
+        {
+          "target": "custody-varlik-ayristirma",
+          "relation": "penalizes"
+        }
+      ],
+      "key_values": {
+        "imprisonment": "5-12 yil",
+        "judicial_fine": "20.000 gune kadar",
+        "subject": "musteri varligi zimmet"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "law-6362-art99b-dolandiricilik",
+      "category": "penalties",
+      "title": "Madde 99/B - Kripto Varlik Dolandiriciligi",
+      "description": "Kripto varlik alim satim platformunda hile, aldatma veya manipulasyon yoluyla musteri zararina neden olanlar 4 yildan 8 yila kadar hapis cezasi ile cezalandirilir",
+      "source": {
+        "law_type": "kanun",
+        "law_no": "6362",
+        "article": "99/B",
+        "title": "Sermaye Piyasasi Kanunu"
+      },
+      "edges": [
+        {
+          "target": "market-integrity-manipulation",
+          "relation": "penalizes"
+        },
+        {
+          "target": "market-integrity-insider",
+          "relation": "penalizes"
+        }
+      ],
+      "key_values": {
+        "imprisonment": "4-8 yil",
+        "scope": "hile, aldatma, manipulasyon"
+      },
+      "priority": "critical"
+    }
+  ]
+}

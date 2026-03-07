@@ -1,0 +1,378 @@
+{
+  "nodes": [
+    {
+      "id": "capital-asgari-platform",
+      "category": "capital",
+      "title": "Platform Isletimi Icin Asgari Sermaye",
+      "description": "Kripto varlik alim satim platformu isletmek icin en az 150 milyon TL asgari odenmis sermaye gereklidir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.2",
+        "article": "34",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Calisma Usul ve Esaslari ile Sermaye Yeterliligi Hakkinda Teblig"
+      },
+      "edges": [
+        {
+          "target": "licensing-capital-min",
+          "relation": "implements"
+        },
+        {
+          "target": "capital-teblig-adequacy",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {
+        "min_capital": "150.000.000 TL",
+        "service_type": "platform isletimi"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "capital-asgari-saklama",
+      "category": "capital",
+      "title": "Saklama Hizmeti Icin Asgari Sermaye",
+      "description": "Kripto varlik saklama hizmeti sunmak icin en az 500 milyon TL asgari odenmis sermaye gereklidir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.2",
+        "article": "34",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Calisma Usul ve Esaslari ile Sermaye Yeterliligi Hakkinda Teblig"
+      },
+      "edges": [
+        {
+          "target": "licensing-capital-min",
+          "relation": "implements"
+        },
+        {
+          "target": "capital-teblig-adequacy",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {
+        "min_capital": "500.000.000 TL",
+        "service_type": "saklama hizmeti"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "capital-asgari-transfer",
+      "category": "capital",
+      "title": "Transfer Hizmeti Icin Asgari Sermaye",
+      "description": "Kripto varlik transferi hizmeti sunmak icin en az 10 milyon TL asgari odenmis sermaye gereklidir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.2",
+        "article": "34",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Calisma Usul ve Esaslari ile Sermaye Yeterliligi Hakkinda Teblig"
+      },
+      "edges": [
+        {
+          "target": "licensing-capital-min",
+          "relation": "implements"
+        },
+        {
+          "target": "capital-teblig-adequacy",
+          "relation": "legal_basis"
+        }
+      ],
+      "key_values": {
+        "min_capital": "10.000.000 TL",
+        "service_type": "transfer hizmeti"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "capital-asgari-birlesik",
+      "category": "capital",
+      "title": "Birden Fazla Hizmet Icin Sermaye Hesaplama",
+      "description": "Birden fazla hizmet turu sunan KVHS, en yuksek sermaye gereksinimini karsilamak zorundadir. Hizmet turleri icin ayri ayri toplanmaz",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.2",
+        "article": "34",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Calisma Usul ve Esaslari ile Sermaye Yeterliligi Hakkinda Teblig"
+      },
+      "edges": [
+        {
+          "target": "capital-asgari-platform",
+          "relation": "references"
+        },
+        {
+          "target": "capital-asgari-saklama",
+          "relation": "references"
+        },
+        {
+          "target": "capital-asgari-transfer",
+          "relation": "references"
+        }
+      ],
+      "key_values": {
+        "calculation": "en yuksek esik uygulanir, toplanmaz"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "capital-oz-kaynak-hesaplama",
+      "category": "capital",
+      "title": "Ozkaynak Hesaplama Yontemi",
+      "description": "KVHS'nin ozkaynak hesaplamasinda odenmis sermaye, yasal yedekler, gecmis yil karlari dahil; gecmis yil zararlari, serefiye ve maddi olmayan duran varliklar indirim kalemi olarak dikkate alinir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.2",
+        "article": "35",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Calisma Usul ve Esaslari ile Sermaye Yeterliligi Hakkinda Teblig"
+      },
+      "edges": [
+        {
+          "target": "capital-teblig-adequacy",
+          "relation": "implements"
+        },
+        {
+          "target": "capital-asgari-birlesik",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "additions": "odenmis sermaye, yasal yedekler, gecmis yil karlari",
+        "deductions": "gecmis yil zararlari, serefiye, maddi olmayan duran varliklar"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "capital-sermaye-yeterlilik-orani",
+      "category": "capital",
+      "title": "Sermaye Yeterlilik Orani",
+      "description": "KVHS'nin ozkaynaklarinin toplam risk agirlikli varliklarina orani en az %8 olmak zorundadir. Bu oran surekli izlenmeli ve raporlanmalidir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.2",
+        "article": "36",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Calisma Usul ve Esaslari ile Sermaye Yeterliligi Hakkinda Teblig"
+      },
+      "edges": [
+        {
+          "target": "capital-oz-kaynak-hesaplama",
+          "relation": "requires"
+        },
+        {
+          "target": "capital-risk-agirlikli-varliklar",
+          "relation": "requires"
+        },
+        {
+          "target": "capital-reporting",
+          "relation": "triggers"
+        }
+      ],
+      "key_values": {
+        "min_ratio": "%8",
+        "monitoring": "surekli"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "capital-risk-agirlikli-varliklar",
+      "category": "capital",
+      "title": "Risk Agirlikli Varlik Hesaplamasi",
+      "description": "Kripto varliklar %100, nakit ve nakit benzeri %0, banka mevduati %20 risk agirligi ile hesaplanir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.2",
+        "article": "44",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Calisma Usul ve Esaslari ile Sermaye Yeterliligi Hakkinda Teblig"
+      },
+      "edges": [
+        {
+          "target": "capital-sermaye-yeterlilik-orani",
+          "relation": "requires"
+        },
+        {
+          "target": "capital-teblig-adequacy",
+          "relation": "implements"
+        }
+      ],
+      "key_values": {
+        "crypto_rw": "%100",
+        "cash_rw": "%0",
+        "bank_deposit_rw": "%20"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "capital-likidite-zorunlulugu",
+      "category": "capital",
+      "title": "Likidite Zorunlulugu",
+      "description": "KVHS, kisa vadeli yukumlululerini karsilayacak yeterli likit varlik bulundurmak zorundadir. Likit varliklar toplami, kisa vadeli borclarin en az %100'u olmalidir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.2",
+        "article": "40",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Calisma Usul ve Esaslari ile Sermaye Yeterliligi Hakkinda Teblig"
+      },
+      "edges": [
+        {
+          "target": "capital-teblig-adequacy",
+          "relation": "implements"
+        },
+        {
+          "target": "capital-sermaye-yeterlilik-orani",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "min_liquidity_ratio": "%100",
+        "scope": "kisa vadeli yukumluluklere karsi likit varliklar"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "capital-tampon-sermaye",
+      "category": "capital",
+      "title": "Ilave Sermaye Tamponu",
+      "description": "KVHS, asgari sermaye gereksiniminin %25'i oraninda ilave sermaye tamponu bulundurmak zorundadir. Tampon sermayenin altina dusulmesi halinde SPK'ya derhal bildirim yapilir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.2",
+        "article": "38",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Calisma Usul ve Esaslari ile Sermaye Yeterliligi Hakkinda Teblig"
+      },
+      "edges": [
+        {
+          "target": "capital-sermaye-yeterlilik-orani",
+          "relation": "requires"
+        },
+        {
+          "target": "capital-reporting",
+          "relation": "triggers"
+        },
+        {
+          "target": "licensing-spk-permit",
+          "relation": "requires"
+        },
+        {
+          "target": "mica-prudential-safeguards",
+          "relation": "tr_eu_equivalent"
+        }
+      ],
+      "key_values": {
+        "buffer_ratio": "%25 ilave",
+        "breach_notification": "derhal SPK'ya"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "capital-aylik-raporlama",
+      "category": "capital",
+      "title": "Aylik Sermaye Yeterlilik Raporu",
+      "description": "KVHS, her ayin sonunu takip eden 15 is gunu icinde sermaye yeterlilik tablosunu SPK'ya gondermek zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.2",
+        "article": "37",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Calisma Usul ve Esaslari ile Sermaye Yeterliligi Hakkinda Teblig"
+      },
+      "edges": [
+        {
+          "target": "capital-sermaye-yeterlilik-orani",
+          "relation": "implements"
+        },
+        {
+          "target": "capital-reporting",
+          "relation": "implements"
+        }
+      ],
+      "key_values": {
+        "frequency": "aylik",
+        "deadline": "takip eden 15 is gunu",
+        "submit_to": "SPK",
+        "deadline_type": "reporting"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "capital-stres-testi",
+      "category": "capital",
+      "title": "Sermaye Stres Testi Zorunlulugu",
+      "description": "KVHS, kripto varlik fiyatlarindaki sert dusus, yuksek hacimli cekim talepleri ve operasyonel aksama senaryolarini kapsayan stres testlerini uc ayda bir yapmak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.2",
+        "article": "43",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Calisma Usul ve Esaslari ile Sermaye Yeterliligi Hakkinda Teblig"
+      },
+      "edges": [
+        {
+          "target": "capital-tampon-sermaye",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "frequency": "ucaylik",
+        "scenarios": "fiyat dususu, cekim talepleri, operasyonel aksama",
+        "deadline_type": "reporting"
+      },
+      "priority": "required"
+    },
+    {
+      "id": "capital-sinir-asimi-bildirimi",
+      "category": "capital",
+      "title": "Sermaye Siniri Asimi Bildirimi",
+      "description": "Ozkaynaklari asgari sermaye gereksiniminin altina dusen KVHS, durumu derhal SPK'ya bildirmek ve 30 gun icinde sermaye tamamlama plani sunmak zorundadir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.2",
+        "article": "48",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Calisma Usul ve Esaslari ile Sermaye Yeterliligi Hakkinda Teblig"
+      },
+      "edges": [
+        {
+          "target": "capital-tampon-sermaye",
+          "relation": "triggers"
+        },
+        {
+          "target": "capital-reporting",
+          "relation": "requires"
+        }
+      ],
+      "key_values": {
+        "notification": "derhal",
+        "remediation_plan": "30 gun icinde",
+        "consequence": "faaliyet izni askiya alinabilir",
+        "deadline_type": "notification"
+      },
+      "priority": "critical"
+    },
+    {
+      "id": "capital-yillik-guncelleme",
+      "category": "capital",
+      "title": "Asgari Sermaye Tutarlarinin Yillik Guncellenmesi",
+      "description": "SPK, asgari sermaye tutarlarini her yil yeniden degerleme oraninda guncelleyebilir. Guncellenen tutarlar Resmi Gazete'de yayimlanir",
+      "source": {
+        "law_type": "teblig",
+        "law_no": "III-35/B.2",
+        "article": "53",
+        "title": "Kripto Varlik Hizmet Saglayicilarinin Calisma Usul ve Esaslari ile Sermaye Yeterliligi Hakkinda Teblig"
+      },
+      "edges": [
+        {
+          "target": "capital-asgari-platform",
+          "relation": "triggers"
+        },
+        {
+          "target": "capital-asgari-saklama",
+          "relation": "triggers"
+        },
+        {
+          "target": "capital-asgari-transfer",
+          "relation": "triggers"
+        }
+      ],
+      "key_values": {
+        "update_method": "yeniden degerleme orani",
+        "compliance_period": "3 ay",
+        "publication": "Resmi Gazete",
+        "deadline_type": "reporting"
+      },
+      "priority": "required"
+    }
+  ]
+}
