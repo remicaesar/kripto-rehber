@@ -25,6 +25,7 @@ app = FastMCP(
         "Use list_categories() to see compliance domains, get_obligations() to browse by category, "
         "trace_obligation() to follow dependency chains, impact_analysis() to assess regulatory change, "
         "and compare_tr_mica() for Turkey vs EU MiCA comparison. "
+        "Use export_checklist() to dump all obligations to a CSV for compliance teams. "
         "Use get_article_text() to fetch actual law text from mevzuat.gov.tr via the upstream Mevzuat MCP."
     ),
 )
@@ -271,6 +272,51 @@ def compare_tr_mica(
 
 
 @app.tool()
+def analyze_business_plan_risks(
+    activities: list[str] = Field(
+        ...,
+        description="List of proposed business features/activities (e.g. ['margin trading', 'cold wallet', 'token issuance', 'staking', 'foreign users'])",
+    ),
+) -> str:
+    """
+    RAG (Retrieval-Augmented Generation) context provider for AI automated audits.
+    Given a list of business activities extracted from a company's business plan,
+    identifies the exact regulatory nodes and critical constraints that apply to those activities.
+    Returns a structured 'Risk & Audit Profile' to help write a comprehensive compliance report.
+    """
+    result = graph.evaluate_business_model(activities)
+    return _json(result)
+
+
+@app.prompt()
+def audit_prompt(
+    business_plan: str = Field(..., description="The raw business plan or product proposal text to evaluate"),
+) -> str:
+    """
+    Creates the perfect LLM system prompt to conduct an automated regulatory audit of a crypto business plan.
+    """
+    # Pull global critical constraints
+    critical_nodes = graph.nodes_by_priority("critical")
+    critical_summary = json.dumps([graph._summarize(n) for n in critical_nodes], indent=2, ensure_ascii=False)
+    
+    return f"""
+You are an expert Turkish Cryptocurrency Compliance Auditor.
+Your job is to read the attached business plan and evaluate it against Turkish SPK and MASAK crypto laws.
+
+1. First, extract the core activities (e.g., custody, trading, foreign users, staking).
+2. You can use the `analyze_business_plan_risks` tool to retrieve exactly which articles restrict these activities.
+3. Use the `get_article_text` tool to pull the precise Turkish law paragraph from Mevzuat MCP for any flagged critical constraints.
+4. Output a comprehensive 'Compliance Action Plan'.
+
+=== GLOBAL CRITICAL CONSTRAINTS TO KEEP IN MIND ===
+{critical_summary}
+
+=== APPLICANT BUSINESS PLAN ===
+{business_plan}
+"""
+
+
+@app.tool()
 def compliance_checklist(
     service_type: str = Field(
         ...,
@@ -285,6 +331,28 @@ def compliance_checklist(
     most for KVHS founders — not everything, just what's critical.
     """
     result = graph.compliance_checklist(service_type)
+    return _json(result)
+
+
+@app.tool()
+def export_checklist(
+    service_type: str = Field(
+        ...,
+        description="Type of crypto service: 'platform' (trading), 'saklama' (custody), or 'transfer'.",
+    ),
+    export_format: str = Field(
+        "csv",
+        description="Format of the export. Currently defaults to 'csv'.",
+    ),
+) -> str:
+    """
+    Export all relevant compliance obligations for a service type to a CSV file.
+    
+    Generates a downloadable CSV containing the full breakdown of every 
+    critical, required, and recommended obligation for compliance teams.
+    Returns the absolute file path where the CSV was saved.
+    """
+    result = graph.export_checklist(service_type, export_format)
     return _json(result)
 
 

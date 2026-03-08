@@ -481,3 +481,25 @@ def test_deadline_type_metadata():
             assert dt in valid_types, f"{n['id']} has invalid deadline_type: {dt}"
             dt_count += 1
     assert dt_count >= 30
+
+
+def test_export_checklist():
+    """Verify export_checklist generates a CSV."""
+    g = ObligationGraph()
+    result = g.export_checklist("platform", "csv")
+    
+    assert result["success"] is True
+    assert result["matched_as"] == "platform"
+    assert result["total_exported"] > 20
+    assert "file_path" in result
+    
+    import pathlib
+    p = pathlib.Path(result["file_path"])
+    assert p.exists()
+    assert p.is_file()
+    assert p.suffix == ".csv"
+    
+    # Check contents
+    content = p.read_text(encoding="utf-8-sig")
+    assert "ID,Kategori,Öncelik,Başlık,Açıklama,Kaynak" in content
+    assert "platform" in content.lower()

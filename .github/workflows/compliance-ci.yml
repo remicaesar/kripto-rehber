@@ -1,0 +1,26 @@
+name: Compliance Link Checker
+
+on:
+  schedule:
+    - cron: '0 0 1 * *'  # Run at 00:00 on day-of-month 1
+  workflow_dispatch:      # Allow manual triggering
+
+jobs:
+  validate-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: "pyproject.toml"
+
+      - name: Check Mevzuat MCP Links
+        run: uv run python src/kripto_rehber/validate_links.py

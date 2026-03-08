@@ -12,6 +12,8 @@ import json
 from collections import deque
 from pathlib import Path
 from typing import Optional
+import csv
+import os
 
 DATA_DIR = Path(__file__).resolve().parent.parent.parent / "data" / "graph"
 
@@ -73,6 +75,76 @@ class ObligationGraph:
 
     def nodes_by_category(self, category: str) -> list[dict]:
         return [n for n in self._nodes.values() if n["category"] == category]
+
+    def nodes_by_priority(self, priority: str) -> list[dict]:
+        """All nodes matching a specific priority level (critical, required, recommended)."""
+        return [n for n in self._nodes.values() if n.get("priority", "required") == priority]
+
+    def evaluate_business_model(self, activities: list[str]) -> dict:
+        """
+        Map a list of free-text business activities to the most relevant
+        regulatory nodes in the graph based on keyword matching and heuristics.
+        Returns a structured risk assessment report for the LLM.
+        """
+        results = {}
+        for act in activities:
+            act_lower = act.lower()
+            # Conceptual mappings (En/Tr)
+            keywords = [act_lower]
+            if "margin" in act_lower or "leverage" in act_lower or "kredi" in act_lower:
+                keywords.extend(["kredili", "kaldırac", "kaldıraclı", "vadeli"])
+            elif "custody" in act_lower or "saklama" in act_lower:
+                keywords.extend(["saklama", "soğuk", "soguk", "cüzdan", "cuzdan", "anahtar", "ayristirma"])
+            elif "foreign" in act_lower or "yabancı" in act_lower or "yurtdisi" in act_lower or "crossborder" in act_lower:
+                keywords.extend(["yurtdışı", "yurtdisi", "crossborder", "yabanci"])
+            elif "fiat" in act_lower or "itibari" in act_lower or "deposit" in act_lower:
+                keywords.extend(["itibari", "nakit", "banka", "kimlik"])
+            elif "p2p" in act_lower or "peer" in act_lower:
+                keywords.extend(["p2p", "travel", "transfer"])
+            elif "token" in act_lower or "ico" in act_lower or "ihraç" in act_lower:
+                keywords.extend(["ihraç", "ihrac", "satış", "ico", "listeleme"])
+            elif "atm" in act_lower or "kiosk" in act_lower:
+                keywords.extend(["atm", "kiosk", "nakit"])
+            elif "staking" in act_lower or "yield" in act_lower or "faiz" in act_lower:
+                keywords.extend(["getiri", "faiz", "staking", "ödünç"])
+            elif "defi" in act_lower or "decentralized" in act_lower or "merkeziyetsiz" in act_lower:
+                keywords.extend(["merkeziyetsiz", "defi"])
+            elif "listing" in act_lower or "listeleme" in act_lower:
+                keywords.extend(["listeleme", "delist", "kriter"])
+            
+            # De-duplicate keywords
+            keywords = list(set(keywords))
+            
+            matched_nodes = set()
+            for n in self._nodes.values():
+                haystack = f"{n['id']} {n['title']} {n['description']} {n.get('key_values', {})}"
+                haystack = haystack.lower()
+                for kw in keywords:
+                    if kw in haystack:
+                        matched_nodes.add(n["id"])
+                        break
+            
+            # Bucket them by priority to guide the audit
+            critical = []
+            required = []
+            for nid in matched_nodes:
+                node = self._nodes[nid]
+                if node.get("priority", "required") == "critical":
+                    critical.append(_summarize(node))
+                elif node.get("priority", "required") == "required":
+                    required.append(_summarize(node))
+                    
+            results[act] = {
+                "matched_keywords": keywords,
+                "critical_rules": critical,
+                "required_rules_count": len(required)
+            }
+            
+        return {
+            "total_activities_evaluated": len(activities),
+            "activity_analysis": results
+        }
+
 
     def search(self, query: str) -> list[dict]:
         """Case-insensitive keyword search across id, title, description, and key_values."""
@@ -234,8 +306,8 @@ class ObligationGraph:
                 return alias
         return None
 
-    def compliance_checklist(self, service_type: str) -> dict:
-        """Obligations for a service type, grouped by category with priority summary."""
+    def _get_relevant_obligations(self, service_type: str) -> tuple[Optional[str], list[dict]]:
+        """Helper to get obligations relevant to a specific service type."""
         matched = self._match_service(service_type)
 
         universal_categories = {
@@ -264,6 +336,11 @@ class ObligationGraph:
             elif cat == "custody":
                 if not matched or matched == "saklama":
                     relevant.append(n)
+        return matched, relevant
+
+    def compliance_checklist(self, service_type: str) -> dict:
+        """Obligations for a service type, grouped by category with priority summary."""
+        matched, relevant = self._get_relevant_obligations(service_type)
 
         # Build summary per category: critical items + counts
         category_order = [
@@ -301,6 +378,45 @@ class ObligationGraph:
             "total_critical": total_critical,
             "categories": len(sorted_checklist),
             "checklist": sorted_checklist,
+        }
+
+    def export_checklist(self, service_type: str, export_format: str = "csv") -> dict:
+        """Export obligations to a CSV file."""
+        matched, relevant = self._get_relevant_obligations(service_type)
+        
+        if not relevant:
+            return {"error": f"No obligations found for service type: {service_type}"}
+            
+        export_dir = Path(__file__).resolve().parent.parent.parent / "exports"
+        export_dir.mkdir(parents=True, exist_ok=True)
+        
+        filename = f"{matched or 'genel'}_compliance_checklist.csv"
+        filepath = export_dir / filename
+        
+        # Sort relevant by priority
+        relevant.sort(key=lambda x: self._PRIORITY_ORDER.get(x.get("priority", "required"), 1))
+        
+        with open(filepath, mode="w", newline="", encoding="utf-8-sig") as f:
+            writer = csv.writer(f)
+            writer.writerow(["ID", "Kategori", "Öncelik", "Başlık", "Açıklama", "Kaynak (Kanun/Madde)"])
+            
+            for item in relevant:
+                source = f"{item['source'].get('law_type', '')} {item['source'].get('law_no', '')} Madde {item['source'].get('article', '')}".strip()
+                writer.writerow([
+                    item["id"],
+                    item["category"],
+                    item.get("priority", "required").upper(),
+                    item["title"],
+                    item["description"].replace("\n", " "),
+                    source
+                ])
+                
+        return {
+            "success": True,
+            "service_type": service_type,
+            "matched_as": matched or "genel",
+            "total_exported": len(relevant),
+            "file_path": str(filepath)
         }
 
     def deadlines(self) -> dict:

@@ -188,11 +188,20 @@ Each node is an obligation or legal provision:
 - [x] Tests: 43 → 51, all passing (8 new priority/deadline tests)
 - [x] Schema updated: `priority` field added to node definition
 
-### Sprint 6 - Polish + Visualization (Stretch)
-- [ ] Web-based graph visualizer
-- [ ] Export to common formats (CSV for compliance teams, GraphML)
-- [ ] Documentation and usage examples
-- [ ] Consider publishing as open-source
+### Sprint 6 - Polish + Visualization (Complete)
+- [x] Web-based graph visualizer (D3.js dashboard reading from `api/graph`)
+- [x] Export to common formats (CSV for compliance teams)
+- [x] Documentation and usage examples
+- [x] Consider publishing as open-source
+
+### Sprint 7 - Maintenance & CI (Complete)
+- [x] Built Compliance CI Link Rot Checker (`validate_links.py`)
+- [x] Added GitHub Actions cron workflow to automatically test Mevzuat database parity
+
+### Phase 2: Advanced AI Integrations
+- [x] True Legal RAG (Automated AI Audits mapped to business activities)
+- [ ] Live-Text Rendering in D3 UI (Fetch actual legal texts on click)
+- [ ] Deep EU-MiCA side-by-side mapping for global compliance tools
 
 ---
 

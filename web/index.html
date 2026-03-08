@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kripto Rehber Compliance Graph</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --text-color: #e2e8f0;
+            --panel-bg: rgba(30, 41, 59, 0.9);
+            --border-color: #334155;
+            --accent-color: #38bdf8;
+            --node-critical: #ef4444;
+            --node-required: #f59e0b;
+            --node-recommended: #10b981;
+            --node-default: #64748b;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            overflow: hidden;
+            display: flex;
+            height: 100vh;
+        }
+
+        #graph-container {
+            flex-grow: 1;
+            height: 100%;
+            position: relative;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .node {
+            cursor: pointer;
+            transition: r 0.1s;
+        }
+
+        .node:hover {
+            filter: brightness(1.2);
+        }
+
+        .link {
+            fill: none;
+            stroke: #475569;
+            stroke-opacity: 0.6;
+            stroke-width: 1.5px;
+        }
+
+        .link.highlighted {
+            stroke: var(--accent-color);
+            stroke-opacity: 0.9;
+            stroke-width: 3px;
+        }
+
+        text {
+            fill: var(--text-color);
+            font-size: 10px;
+            pointer-events: none;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+        }
+
+        #sidebar {
+            width: 400px;
+            background-color: var(--panel-bg);
+            border-left: 1px solid var(--border-color);
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-sizing: border-box;
+            box-shadow: -4px 0 15px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin: 0 0 8px 0;
+            color: var(--accent-color);
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .panel {
+            background-color: #1e293b;
+            border-radius: 8px;
+            padding: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        #node-details {
+            display: none;
+        }
+
+        #node-details.visible {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .detail-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0;
+            color: #f8fafc;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge.critical {
+            background-color: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #fca5a5;
+        }
+
+        .badge.required {
+            background-color: rgba(245, 158, 11, 0.2);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            color: #fcd34d;
+        }
+
+        .badge.recommended {
+            background-color: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: #6ee7b7;
+        }
+
+        .badge.category {
+            background-color: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: #7dd3fc;
+        }
+
+        .meta-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .detail-description {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #cbd5e1;
+            margin: 0;
+            padding: 12px;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 6px;
+            border-left: 3px solid var(--text-color);
+        }
+
+        .data-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.85rem;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .data-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 4px;
+        }
+
+        .data-list .label {
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .data-list .val {
+            font-weight: 600;
+            color: #e2e8f0;
+            text-align: right;
+            max-width: 60%;
+            word-break: break-all;
+        }
+
+        .section-header {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #64748b;
+            margin: 16px 0 8px 0;
+            font-weight: 700;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 4px;
+        }
+
+        #controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background-color: #334155;
+            color: white;
+            border: 1px solid #475569;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            flex: 1;
+        }
+
+        .btn:hover {
+            background-color: #475569;
+            border-color: #64748b;
+        }
+
+        .select-wrapper {
+            margin-bottom: 16px;
+        }
+
+        select {
+            width: 100%;
+            background-color: #1e293b;
+            color: #e2e8f0;
+            border: 1px solid #475569;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        select:focus {
+            border-color: var(--accent-color);
+        }
+
+        /* Loading indicator */
+        #loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .edge-label {
+            font-size: 8px;
+            fill: #94a3b8;
+            cursor: default;
+        }
+
+        #search-container {
+            margin-bottom: 16px;
+        }
+
+        #search-input {
+            width: 100%;
+            background-color: #1e293b;
+            color: white;
+            border: 1px solid #475569;
+            padding: 10px;
+            border-radius: 6px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        #search-input:focus {
+            border-color: var(--accent-color);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="graph-container">
+        <div id="loader">
+            <div class="spinner"></div>
+            <div>Loading Compliance Graph Data...</div>
+        </div>
+        <svg></svg>
+    </div>
+
+    <div id="sidebar">
+        <div>
+            <h1>Kripto Rehber</h1>
+            <div class="subtitle">Turkish Crypto Compliance Graph Explorer</div>
+        </div>
+
+        <div id="search-container">
+            <input type="text" id="search-input" placeholder="Search nodes (e.g., '150M TL', 'masak')...">
+        </div>
+
+        <div class="select-wrapper">
+            <select id="category-filter">
+                <option value="all">All Categories</option>
+            </select>
+        </div>
+
+        <div id="controls">
+            <button class="btn" id="btn-reset">Reset View</button>
+            <button class="btn" id="btn-labels">Toggle Text</button>
+        </div>
+
+        <div id="node-details" class="panel">
+            <div class="meta-group" id="detail-badges">
+                <!-- Badges will be injected here -->
+            </div>
+
+            <h2 class="detail-title" id="detail-title">Select a node</h2>
+
+            <p class="detail-description" id="detail-desc"></p>
+
+            <div class="section-header">Legal Source</div>
+            <ul class="data-list" id="detail-source">
+                <!-- Source data goes here -->
+            </ul>
+
+            <div id="key-values-container" style="display: none;">
+                <div class="section-header">Key Parameters</div>
+                <ul class="data-list" id="detail-kv">
+                    <!-- KV data goes here -->
+                </ul>
+            </div>
+
+            <div class="section-header">Connections</div>
+            <ul class="data-list" id="detail-edges">
+                <!-- Edge data goes here -->
+            </ul>
+        </div>
+
+        <div id="welcome-panel" class="panel">
+            <h3>Graph Statistics</h3>
+            <ul class="data-list" id="global-stats">
+                <li><span class="label">Total Nodes</span> <span class="val" id="stat-nodes">-</span></li>
+                <li><span class="label">Total Edges</span> <span class="val" id="stat-edges">-</span></li>
+            </ul>
+            <p style="font-size: 0.85rem; color: #94a3b8; margin-top: 16px; line-height: 1.5;">
+                Click on any node to view its regulatory details and isolate its dependency chain. Scroll to zoom, drag
+                to pan.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const colorScale = {
+            'critical': 'var(--node-critical)',
+            'required': 'var(--node-required)',
+            'recommended': 'var(--node-recommended)',
+            'default': 'var(--node-default)'
+        };
+
+        const categoryColors = d3.scaleOrdinal(d3.schemePaired);
+
+        // Globals
+        let graphData = { nodes: [], links: [] };
+        let nodeSelection, linkSelection, textSelection, labelsEnabled = true;
+        let simulation;
+
+        // Initialize D3
+        const svg = d3.select("svg");
+        const sf = d3.zoom().on("zoom", (e) => g.attr("transform", e.transform));
+        svg.call(sf);
+
+        const g = svg.append("g");
+
+        // Setup SVG Arrow markers for directed edges
+        svg.append("defs").selectAll("marker")
+            .data(["end", "highlighted-end"])
+            .enter().append("marker")
+            .attr("id", String)
+            .attr("viewBox", "0 -5 10 10")
+            .attr("refX", 18)
+            .attr("refY", 0)
+            .attr("markerWidth", 6)
+            .attr("markerHeight", 6)
+            .attr("orient", "auto")
+            .append("path")
+            .attr("d", "M0,-5L10,0L0,5")
+            .attr("fill", d => d === "highlighted-end" ? "var(--accent-color)" : "#475569");
+
+        async function loadData() {
+            try {
+                const response = await fetch('/api/graph');
+                if (!response.ok) throw new Error("Failed to load graph data");
+
+                const data = await response.json();
+
+                const nodeMap = new Map();
+                data.nodes.forEach(n => {
+                    nodeMap.set(n.id, n);
+                    n.radius = n.priority === 'critical' ? 12 : (n.priority === 'required' ? 8 : 6);
+                });
+
+                data.links.forEach(l => {
+                    l.sourceNode = nodeMap.get(l.source);
+                    l.targetNode = nodeMap.get(l.target);
+                });
+
+                graphData.nodes = data.nodes;
+                graphData.links = data.links.filter(l => l.sourceNode && l.targetNode);
+
+                populateCategories();
+                updateStats();
+                renderGraph();
+
+                document.getElementById('loader').style.display = 'none';
+            } catch (error) {
+                console.error("Error loading graph:", error);
+                document.getElementById('loader').innerHTML = `
+                    <div style="color: #ef4444; font-weight: bold;">Error loading graph data.</div>
+                    <div style="font-size: 0.8rem; color: #94a3b8;">Make sure the API server is running (python serve_web.py).</div>
+                `;
+            }
+        }
+
+        function populateCategories() {
+            const cats = [...new Set(graphData.nodes.map(n => n.category))].sort();
+            const select = document.getElementById('category-filter');
+            cats.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c;
+                opt.textContent = c.charAt(0).toUpperCase() + c.slice(1);
+                select.appendChild(opt);
+            });
+
+            select.addEventListener('change', (e) => {
+                filterCategory(e.target.value);
+            });
+        }
+
+        function updateStats() {
+            document.getElementById('stat-nodes').textContent = graphData.nodes.length;
+            document.getElementById('stat-edges').textContent = graphData.links.length;
+        }
+
+        function renderGraph() {
+            g.selectAll("*").remove();
+
+            const width = document.getElementById('graph-container').clientWidth;
+            const height = document.getElementById('graph-container').clientHeight;
+
+            simulation = d3.forceSimulation(graphData.nodes)
+                .force("link", d3.forceLink(graphData.links).id(d => d.id).distance(60))
+                .force("charge", d3.forceManyBody().strength(-150))
+                .force("center", d3.forceCenter(width / 2, height / 2))
+                .force("collide", d3.forceCollide().radius(d => d.radius + 10).iterations(2));
+
+            linkSelection = g.append("g")
+                .selectAll("path")
+                .data(graphData.links)
+                .join("path")
+                .attr("class", "link")
+                .attr("marker-end", "url(#end)");
+
+            nodeSelection = g.append("g")
+                .selectAll("circle")
+                .data(graphData.nodes)
+                .join("circle")
+                .attr("class", "node")
+                .attr("r", d => d.radius)
+                .attr("fill", d => colorScale[d.priority || 'default'] || colorScale['default'])
+                .attr("stroke", d => categoryColors(d.category))
+                .attr("stroke-width", 2)
+                .call(drag(simulation))
+                .on("click", handleNodeClick);
+
+            textSelection = g.append("g")
+                .selectAll("text")
+                .data(graphData.nodes)
+                .join("text")
+                .attr("dx", 12)
+                .attr("dy", 4)
+                .text(d => d.title.length > 20 ? d.title.substring(0, 20) + '...' : d.title);
+
+            simulation.on("tick", () => {
+                linkSelection.attr("d", d => {
+                    return `M${d.source.x},${d.source.y}L${d.target.x},${d.target.y}`;
+                });
+
+                nodeSelection
+                    .attr("cx", d => d.x)
+                    .attr("cy", d => d.y);
+
+                textSelection
+                    .attr("x", d => d.x)
+                    .attr("y", d => d.y);
+            });
+        }
+
+        function handleNodeClick(event, d) {
+            event.stopPropagation();
+            highlightNodeDependencies(d);
+            showNodeDetails(d);
+
+            const width = document.getElementById('graph-container').clientWidth;
+            const height = document.getElementById('graph-container').clientHeight;
+            svg.transition().duration(750).call(
+                sf.transform,
+                d3.zoomIdentity.translate(width / 2 - d.x * 1.5, height / 2 - d.y * 1.5).scale(1.5)
+            );
+        }
+
+        function highlightNodeDependencies(targetNode) {
+            const connectedNodeIds = new Set([targetNode.id]);
+            const connectedLinks = new Set();
+
+            graphData.links.forEach(l => {
+                if (l.source.id === targetNode.id || l.target.id === targetNode.id) {
+                    connectedNodeIds.add(l.source.id);
+                    connectedNodeIds.add(l.target.id);
+                    connectedLinks.add(l);
+                }
+            });
+
+            nodeSelection.style("opacity", n => connectedNodeIds.has(n.id) ? 1 : 0.1);
+            textSelection.style("opacity", n => connectedNodeIds.has(n.id) ? 1 : 0.1);
+
+            linkSelection
+                .style("opacity", l => connectedLinks.has(l) ? 1 : 0.05)
+                .classed("highlighted", l => connectedLinks.has(l))
+                .attr("marker-end", l => connectedLinks.has(l) ? "url(#highlighted-end)" : "url(#end)");
+        }
+
+        function resetHighlight() {
+            nodeSelection.style("opacity", 1);
+            textSelection.style("opacity", labelsEnabled ? 1 : 0);
+            linkSelection
+                .style("opacity", 0.6)
+                .classed("highlighted", false)
+                .attr("marker-end", "url(#end)");
+
+            document.getElementById('node-details').classList.remove('visible');
+            document.getElementById('welcome-panel').style.display = 'block';
+        }
+
+        function filterCategory(cat) {
+            if (cat === 'all') {
+                resetHighlight();
+                return;
+            }
+
+            const matchedIds = new Set(graphData.nodes.filter(n => n.category === cat).map(n => n.id));
+
+            nodeSelection.style("opacity", n => matchedIds.has(n.id) ? 1 : 0.1);
+            textSelection.style("opacity", n => matchedIds.has(n.id) ? 1 : 0.1);
+            linkSelection.style("opacity", 0.05).attr("marker-end", "url(#end)");
+
+            document.getElementById('node-details').classList.remove('visible');
+            document.getElementById('welcome-panel').style.display = 'block';
+        }
+
+        function handleSearch(query) {
+            if (!query.trim()) {
+                resetHighlight();
+                return;
+            }
+
+            const q = query.toLowerCase();
+            const matchedIds = new Set(graphData.nodes.filter(n => {
+                const haystack = `${n.id} ${n.title} ${n.description} ${Object.values(n.key_values || {}).join(' ')}`.toLowerCase();
+                return haystack.includes(q);
+            }).map(n => n.id));
+
+            if (matchedIds.size === 0) return;
+
+            nodeSelection.style("opacity", n => matchedIds.has(n.id) ? 1 : 0.1);
+            textSelection.style("opacity", n => matchedIds.has(n.id) ? 1 : 0.1);
+            linkSelection.style("opacity", 0.05);
+        }
+
+        function showNodeDetails(n) {
+            document.getElementById('welcome-panel').style.display = 'none';
+            const panel = document.getElementById('node-details');
+            panel.classList.remove('visible');
+
+            void panel.offsetWidth;
+
+            const badgesHtml = `
+                <span class="badge category">${n.category}</span>
+                <span class="badge ${n.priority || 'required'}">${n.priority || 'Required'}</span>
+            `;
+            document.getElementById('detail-badges').innerHTML = badgesHtml;
+
+            document.getElementById('detail-title').textContent = n.title;
+            const descEl = document.getElementById('detail-desc');
+            descEl.textContent = n.description;
+            descEl.style.borderLeftColor = colorScale[n.priority || 'default'];
+
+            const src = n.source || {};
+            const srcHtml = `
+                <li><span class="label">Type</span> <span class="val">${src.law_type || '-'}</span></li>
+                <li><span class="label">Law No</span> <span class="val">${src.law_no || '-'}</span></li>
+                <li><span class="label">Article</span> <span class="val">${src.article || '-'}</span></li>
+            `;
+            document.getElementById('detail-source').innerHTML = srcHtml;
+
+            const kvBox = document.getElementById('key-values-container');
+            const kvList = document.getElementById('detail-kv');
+            if (n.key_values && Object.keys(n.key_values).length > 0) {
+                let kvHtml = '';
+                for (const [k, v] of Object.entries(n.key_values)) {
+                    kvHtml += `<li><span class="label">${k}</span> <span class="val">${v}</span></li>`;
+                }
+                kvList.innerHTML = kvHtml;
+                kvBox.style.display = 'block';
+            } else {
+                kvBox.style.display = 'none';
+            }
+
+            const edgesList = document.getElementById('detail-edges');
+            let edgeHtml = '';
+
+            const outgoing = graphData.links.filter(l => l.source.id === n.id);
+            const incoming = graphData.links.filter(l => l.target.id === n.id);
+
+            if (outgoing.length === 0 && incoming.length === 0) {
+                edgeHtml = '<li><span style="color: #64748b; font-style: italic;">No specific connections mapped.</span></li>';
+            } else {
+                outgoing.forEach(l => {
+                    const t = typeof l.target === 'object' ? l.target.title : l.target;
+                    edgeHtml += `<li><span class="label" style="color: #fca5a5;">→ outputs [${l.relation}]</span> <span class="val" style="font-size: 0.75rem;">${t}</span></li>`;
+                });
+                incoming.forEach(l => {
+                    const s = typeof l.source === 'object' ? l.source.title : l.source;
+                    edgeHtml += `<li><span class="label" style="color: #6ee7b7;">← implies [${l.relation}]</span> <span class="val" style="font-size: 0.75rem;">${s}</span></li>`;
+                });
+            }
+            edgesList.innerHTML = edgeHtml;
+
+            panel.classList.add('visible');
+        }
+
+        const drag = simulation => {
+            function dragstarted(event, d) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                d.fx = d.x;
+                d.fy = d.y;
+            }
+            function dragged(event, d) {
+                d.fx = event.x;
+                d.fy = event.y;
+            }
+            function dragended(event, d) {
+                if (!event.active) simulation.alphaTarget(0);
+                d.fx = null;
+                d.fy = null;
+            }
+            return d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended);
+        };
+
+        document.getElementById('btn-reset').addEventListener('click', () => {
+            document.getElementById('category-filter').value = 'all';
+            document.getElementById('search-input').value = '';
+            svg.transition().duration(750).call(sf.transform, d3.zoomIdentity);
+            resetHighlight();
+        });
+
+        document.getElementById('btn-labels').addEventListener('click', () => {
+            labelsEnabled = !labelsEnabled;
+            textSelection.style("opacity", labelsEnabled ? 1 : 0);
+        });
+
+        svg.on("click", (e) => {
+            if (e.target.tagName === 'svg') {
+                resetHighlight();
+            }
+        });
+
+        let searchTimeout;
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => handleSearch(e.target.value), 300);
+        });
+
+        window.addEventListener('DOMContentLoaded', loadData);
+    </script>
+</body>
+
+</html>

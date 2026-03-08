@@ -18,7 +18,9 @@ classifiers = [
 ]
 dependencies = [
     "fastmcp",
+    "flask>=3.1.3",
     "jsonschema",
+    "termcolor>=3.3.0",
 ]
 
 [project.urls]
@@ -39,3 +41,8 @@ asyncio_mode = "auto"
 
 [project.scripts]
 kripto-rehber = "kripto_rehber.server:main"
+
+[project.optional-dependencies]
+dev = [
+    "termcolor>=3.3.0",
+]

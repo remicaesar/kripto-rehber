@@ -56,11 +56,14 @@ uv sync
 # Run the MCP server
 uv run python -m kripto_rehber.server
 
-# Run tests (51 tests)
+# Run tests (62 tests)
 uv run pytest tests/ -v
 
-# Validate graph integrity
-uv run python -m kripto_rehber.validate
+# Run the Link Rot Checker (verifies all Mevzuat links are still valid)
+uv run python src/kripto_rehber/validate_links.py
+
+# Start the interactive D3.js web visualizer (runs on port 8081)
+uv run python web/serve_web.py
 ```
 
 ## Claude Desktop setup
@@ -82,7 +85,7 @@ Add to `claude_desktop_config.json`:
 }
 ```
 
-## MCP Tools (10)
+## MCP Tools (11)
 
 ### Navigation
 
@@ -101,6 +104,8 @@ Add to `claude_desktop_config.json`:
 | Tool | Description |
 |------|-------------|
 | `compliance_checklist(service_type)` | Prioritized obligations for platform/custody/transfer — critical items in detail, required/recommended as counts |
+| `export_checklist(service_type)` | Complete export of the subset of compliance obligations directly to a CSV file. |
+| `analyze_business_plan_risks(activities)` | True Legal RAG mapping of free-text crypto startup activities directly to priority-bucketed critical legislation thresholds |
 | `deadlines()` | Time-sensitive obligations in 5 buckets: notification, reporting, transition, retention, customer rights |
 | `licensing_roadmap(service_type)` | Curated 15-step path from company formation to SPK approval, with blocker flags |
 
@@ -110,7 +115,35 @@ Add to `claude_desktop_config.json`:
 |------|-------------|
 | `graph_stats()` | Node/edge counts, top connected nodes, orphans |
 
+## Interactive Web Visualizer
+
+We've built a full-fledged D3.js Network Graph Engine to easily explore the complex web of regulations visually. 
+
+Run the server:
+```bash
+uv run python web/serve_web.py
+```
+And navigate to `http://localhost:8081` to explore:
+* **Visual Priority**: Nodes scaled and colored by `critical`, `required`, and `recommended` priority.
+* **Instant Filtering**: Filter by category (e.g. `AML`, `Licensing`) or free-text search (e.g., `150M TL`).
+* **Live Node Inspector**: Click any node to instantly see its legal source, custom parameters, and a trace of all upstream/downstream connections.
+
+## Compliance CI (Link Rot Checker)
+
+Because Kripto Rehber uses live Turkish law references mapping directly to authoritative gov sites, there's always a risk that a law amends and structural elements change (Link Rot).
+
+* Kripto Rehber runs a **Compliance CI checker** locally: `uv run python src/kripto_rehber/validate_links.py`
+* This iterates through our *entire* offline node dataset, queries the upstream Mevzuat MCP, and asserts that **100% of our laws and article numbers still successfully resolve to valid text** on `mevzuat.gov.tr`.
+* A GitHub Action automatically secures this integrity on a monthly cron job.
+
 ## Example usage
+
+**"Audit my pitch deck: We want to offer margin trading and custody to EU users"**
+```
+→ /audit
+  Dynamically maps 'margin' -> Art 109/A, 'custody' -> 500M TL & Cold Wallets, 'foreign users' -> Crossborder blocks
+  Retrieves text from Mevzuat MCP. Generates a formatted Risk Assessment advising the founders.
+```
 
 **"I want to start a crypto platform in Turkey"**
 ```
