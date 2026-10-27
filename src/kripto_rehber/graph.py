@@ -131,7 +131,7 @@ class ObligationGraph:
                 node = self._nodes[nid]
                 if node.get("priority", "required") == "critical":
                     critical.append(_summarize(node))
-                elif node.get("priority", "required") == "required":
+                else:
                     required.append(_summarize(node))
                     
             results[act] = {
@@ -558,6 +558,170 @@ class ObligationGraph:
             "blocker_steps": 0,
             "steps": [],
             "note": f"No curated licensing path for '{service_type}'",
+        }
+
+    # -- Penalty Calculator --
+
+    # Penalty classification keys
+    _CRIMINAL_KEYS = {"imprisonment", "prison", "judicial_fine"}
+    _FINE_KEYS = {"min_fine", "max_fine", "min", "max", "operational_violation",
+                  "notification_breach", "reporting_failure"}
+    _SANCTION_KEYS = {"max_suspension", "ban_period", "consequence"}
+
+    def _find_penalties_for_node(self, node_id: str) -> list[dict]:
+        """Find all penalty nodes that penalize a given obligation node."""
+        penalties = []
+        for src_id, rel, note in self._reverse.get(node_id, []):
+            if rel == "penalizes":
+                pnode = self._nodes.get(src_id)
+                if pnode:
+                    penalties.append(pnode)
+        return penalties
+
+    def _classify_penalty(self, penalty_node: dict) -> dict:
+        """Extract structured penalty info from a penalty node's key_values."""
+        kv = penalty_node.get("key_values", {})
+        desc = penalty_node["description"]
+
+        criminal = {}
+        fines = {}
+        sanctions = {}
+
+        for k, v in kv.items():
+            if k in self._CRIMINAL_KEYS:
+                criminal[k] = v
+            elif k in self._FINE_KEYS:
+                fines[k] = v
+            elif k in self._SANCTION_KEYS:
+                sanctions[k] = v
+
+        # Fallback: parse "penalty" and "penalty_type" free-text fields
+        penalty_text = kv.get("penalty", "")
+        if penalty_text and not criminal and not fines:
+            if "hapis" in penalty_text.lower():
+                criminal["penalty"] = penalty_text
+            elif "para cezasi" in penalty_text.lower():
+                fines["penalty"] = penalty_text
+
+        # Classify severity
+        if criminal:
+            severity = "criminal"
+        elif fines:
+            severity = "administrative"
+        elif sanctions:
+            severity = "operational"
+        else:
+            # Infer from description
+            desc_lower = desc.lower()
+            if any(w in desc_lower for w in ["hapis", "cezalandirilir"]):
+                severity = "criminal"
+            elif "para cezasi" in desc_lower:
+                severity = "administrative"
+            else:
+                severity = "operational"
+
+        return {
+            "penalty_node_id": penalty_node["id"],
+            "title": penalty_node["title"],
+            "description": desc,
+            "source_article": f"{penalty_node['source'].get('law_type', '')} {penalty_node['source'].get('law_no', '')} Madde {penalty_node['source'].get('article', '')}".strip(),
+            "severity": severity,
+            "criminal": criminal or None,
+            "fines": fines or None,
+            "sanctions": sanctions or None,
+        }
+
+    def calculate_penalty_risk(self, activities: list[str]) -> dict:
+        """Calculate penalty risk exposure for given business activities.
+
+        For each activity, finds matching obligation nodes, then traverses
+        penalizes edges in reverse to build a structured risk ledger with
+        criminal (imprisonment), administrative (fines), and operational
+        (suspension/ban) penalties.
+        """
+        risk_entries: list[dict] = []
+        seen_penalties: set[str] = set()
+
+        for act in activities:
+            act_lower = act.lower()
+            # Build keyword set
+            keywords = [act_lower]
+            if "lisans" in act_lower or "izin" in act_lower or "license" in act_lower or "unlicensed" in act_lower:
+                keywords.extend(["lisans", "izin", "faaliyet izni", "spk"])
+            elif "aml" in act_lower or "masak" in act_lower or "aklama" in act_lower:
+                keywords.extend(["masak", "aklama", "supheli", "str", "kyc", "kimlik"])
+            elif "custody" in act_lower or "saklama" in act_lower or "zimmet" in act_lower:
+                keywords.extend(["saklama", "varlik", "zimmet", "cuzdan", "anahtar", "ayristirma"])
+            elif "manipul" in act_lower or "dolandiricilik" in act_lower or "fraud" in act_lower or "insider" in act_lower:
+                keywords.extend(["manipulasyon", "dolandiricilik", "hile", "aldatma", "insider"])
+            elif "bildirim" in act_lower or "raporlama" in act_lower or "reporting" in act_lower:
+                keywords.extend(["bildirim", "raporlama", "rapor"])
+            elif "capital" in act_lower or "sermaye" in act_lower:
+                keywords.extend(["sermaye", "yeterlilik", "capital"])
+            elif "transfer" in act_lower or "travel" in act_lower:
+                keywords.extend(["transfer", "travel rule", "gonderici", "alici"])
+            elif "governance" in act_lower or "yonetim" in act_lower:
+                keywords.extend(["yonetim", "board", "denetim", "kontrol"])
+            keywords = list(set(keywords))
+
+            # Find matching obligation nodes (non-penalty, non-mica)
+            matched_obligations: list[dict] = []
+            for n in self._nodes.values():
+                if n["category"] in ("penalties", "mica-reference", "fatf-reference", "definitions"):
+                    continue
+                haystack = f"{n['id']} {n['title']} {n['description']}".lower()
+                for kw in keywords:
+                    if kw in haystack:
+                        matched_obligations.append(n)
+                        break
+
+            # Find penalties for each matched obligation
+            activity_penalties: list[dict] = []
+            penalized_obligations: list[str] = []
+
+            for obl in matched_obligations:
+                pnodes = self._find_penalties_for_node(obl["id"])
+                if pnodes:
+                    penalized_obligations.append(obl["id"])
+                    for pnode in pnodes:
+                        if pnode["id"] not in seen_penalties:
+                            seen_penalties.add(pnode["id"])
+                            classified = self._classify_penalty(pnode)
+                            classified["triggered_by"] = obl["id"]
+                            activity_penalties.append(classified)
+
+            risk_entries.append({
+                "activity": act,
+                "matched_obligations": len(matched_obligations),
+                "obligations_with_penalties": penalized_obligations,
+                "penalties": activity_penalties,
+            })
+
+        # Aggregate summary
+        all_penalties = [p for entry in risk_entries for p in entry["penalties"]]
+        criminal_count = sum(1 for p in all_penalties if p["severity"] == "criminal")
+        admin_count = sum(1 for p in all_penalties if p["severity"] == "administrative")
+        operational_count = sum(1 for p in all_penalties if p["severity"] == "operational")
+
+        # Overall risk level
+        if criminal_count > 0:
+            overall_risk = "CRITICAL"
+        elif admin_count > 0:
+            overall_risk = "HIGH"
+        elif operational_count > 0:
+            overall_risk = "MEDIUM"
+        else:
+            overall_risk = "LOW"
+
+        return {
+            "overall_risk_level": overall_risk,
+            "summary": {
+                "total_penalties": len(all_penalties),
+                "criminal_penalties": criminal_count,
+                "administrative_fines": admin_count,
+                "operational_sanctions": operational_count,
+            },
+            "activity_risk_breakdown": risk_entries,
         }
 
     # -- internal helpers --

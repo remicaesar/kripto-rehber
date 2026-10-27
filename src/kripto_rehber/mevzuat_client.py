@@ -8,10 +8,26 @@ legislation text. The upstream server is spawned as a subprocess using uvx.
 from __future__ import annotations
 
 import logging
+import os
+from pathlib import Path
 from typing import Any, Optional
 
 from fastmcp import Client
 from fastmcp.client.transports import UvxStdioTransport
+
+# Ensure uvx can be found when running from GUI environments (like Claude Desktop)
+_current_path = os.environ.get("PATH", "")
+_extra_paths = [
+    str(Path.home() / ".local" / "bin"),
+    str(Path.home() / ".cargo" / "bin"),
+    "/opt/homebrew/bin",
+    "/usr/local/bin",
+]
+_paths = _current_path.split(os.pathsep) if _current_path else []
+for _p in reversed(_extra_paths):
+    if _p not in _paths:
+        _paths.insert(0, _p)
+os.environ["PATH"] = os.pathsep.join(_paths)
 
 logger = logging.getLogger(__name__)
 

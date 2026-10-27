@@ -483,6 +483,98 @@ def test_deadline_type_metadata():
     assert dt_count >= 30
 
 
+# -- Penalty Calculator --
+
+
+def test_penalty_risk_unlicensed():
+    """Unlicensed operation should trigger criminal penalties."""
+    g = ObligationGraph()
+    result = g.calculate_penalty_risk(["unlicensed crypto exchange"])
+    assert result["overall_risk_level"] == "CRITICAL"
+    assert result["summary"]["criminal_penalties"] > 0
+    # Should find art 109/A imprisonment
+    all_penalties = result["activity_risk_breakdown"][0]["penalties"]
+    penalty_ids = [p["penalty_node_id"] for p in all_penalties]
+    assert "law-6362-art109a-izinsiz-faaliyet" in penalty_ids
+
+
+def test_penalty_risk_aml_violation():
+    """AML violations should trigger administrative fines."""
+    g = ObligationGraph()
+    result = g.calculate_penalty_risk(["AML program eksikligi"])
+    assert result["summary"]["total_penalties"] > 0
+    all_penalties = result["activity_risk_breakdown"][0]["penalties"]
+    assert any(p["fines"] for p in all_penalties)
+
+
+def test_penalty_risk_custody_misuse():
+    """Customer asset misuse should trigger severe criminal penalties."""
+    g = ObligationGraph()
+    result = g.calculate_penalty_risk(["musteri varligi zimmet"])
+    assert result["overall_risk_level"] == "CRITICAL"
+    all_penalties = result["activity_risk_breakdown"][0]["penalties"]
+    penalty_ids = [p["penalty_node_id"] for p in all_penalties]
+    assert "law-6362-art110a-zimmet" in penalty_ids
+
+
+def test_penalty_risk_market_manipulation():
+    """Market manipulation should trigger criminal penalties."""
+    g = ObligationGraph()
+    result = g.calculate_penalty_risk(["piyasa manipulasyonu"])
+    assert result["overall_risk_level"] == "CRITICAL"
+    all_penalties = result["activity_risk_breakdown"][0]["penalties"]
+    penalty_ids = [p["penalty_node_id"] for p in all_penalties]
+    assert "law-6362-art99b-dolandiricilik" in penalty_ids or "penalty-piyasa-dolandiriciligi" in penalty_ids
+
+
+def test_penalty_risk_multiple_activities():
+    """Multiple activities should aggregate penalties without duplicates."""
+    g = ObligationGraph()
+    result = g.calculate_penalty_risk([
+        "lisanssiz faaliyet",
+        "musteri varligi zimmet",
+        "AML ihlali",
+    ])
+    assert result["summary"]["total_penalties"] >= 3
+    # Each activity should have its own breakdown
+    assert len(result["activity_risk_breakdown"]) == 3
+
+
+def test_penalty_risk_no_match():
+    """Activity with no matching obligations should return LOW risk."""
+    g = ObligationGraph()
+    result = g.calculate_penalty_risk(["yoga studio management"])
+    assert result["overall_risk_level"] == "LOW"
+    assert result["summary"]["total_penalties"] == 0
+
+
+def test_penalty_risk_reporting_violation():
+    """Reporting violations should trigger administrative fines."""
+    g = ObligationGraph()
+    result = g.calculate_penalty_risk(["bildirim ihlali"])
+    assert result["summary"]["total_penalties"] > 0
+
+
+def test_penalty_risk_structure():
+    """Verify output structure is well-formed."""
+    g = ObligationGraph()
+    result = g.calculate_penalty_risk(["lisanssiz faaliyet"])
+    assert "overall_risk_level" in result
+    assert "summary" in result
+    assert "activity_risk_breakdown" in result
+    entry = result["activity_risk_breakdown"][0]
+    assert "activity" in entry
+    assert "matched_obligations" in entry
+    assert "obligations_with_penalties" in entry
+    assert "penalties" in entry
+    if entry["penalties"]:
+        p = entry["penalties"][0]
+        assert "penalty_node_id" in p
+        assert "severity" in p
+        assert "source_article" in p
+        assert p["severity"] in ("criminal", "administrative", "operational")
+
+
 def test_export_checklist():
     """Verify export_checklist generates a CSV."""
     g = ObligationGraph()
